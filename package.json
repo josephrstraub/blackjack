@@ -18,8 +18,8 @@
   "dependencies": {
     "material-ui": "^0.16.4",
     "react": "^15.4.1",
+    "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.1",
-    "react-pure-grid": "^2.1.0",
     "react-redux": "^4.4.6",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
