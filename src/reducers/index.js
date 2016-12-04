@@ -1,9 +1,9 @@
 import { combineReducers } from "redux"
-import deck from './deck'
 import playerHand from './player-hand'
+import dealerHand from './dealer-hand'
 
 export default combineReducers({
 	playerHand,
-	deck
+	dealerHand
 })
 

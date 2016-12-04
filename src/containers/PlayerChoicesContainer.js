@@ -1,16 +1,14 @@
 import { connect } from 'react-redux'
-import { dealCard, removeCard } from '../actions'
+import { dealCardToPlayer } from '../actions'
+import { getNextCard } from '../selectors/deck'
 import PlayerChoices from '../components/PlayerChoices'
 
 const mapStateToProps = (state) => ({
-	nextCard: state.deck[0]
+	nextCard: getNextCard(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	dealCard: (card) => {
-		dispatch(dealCard(card))
-		dispatch(removeCard())
-	}
+	dealCard: (card) => dispatch(dealCardToPlayer(card))
 })
 
 export default connect(

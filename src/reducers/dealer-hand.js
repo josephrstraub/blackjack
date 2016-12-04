@@ -1,6 +1,6 @@
-const playerHand = (state = [], action) => {
+const dealerHand = (state = [], action) => {
 	switch(action.type) {
-		case 'CARD_DEAL_PLAYER':
+		case 'CARD_DEAL_DEALER':
 			return [
 				...state,
 				action.card
@@ -10,4 +10,4 @@ const playerHand = (state = [], action) => {
 	}
 }
 
-export default playerHand
+export default dealerHand

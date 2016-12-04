@@ -1,8 +1,9 @@
-export const dealCard = (card) => ({
-	type: 'CARD_DEAL',
+export const dealCardToPlayer = (card) => ({
+	type: 'CARD_DEAL_PLAYER',
 	card
 })
 
-export const removeCard = () => ({
-	type: 'CARD_REMOVE'
+export const dealCardToDealer = (card) => ({
+	type: 'CARD_DEAL_DEALER',
+	card
 })
