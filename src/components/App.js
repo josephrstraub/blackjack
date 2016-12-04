@@ -2,14 +2,14 @@ import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
-import Hand from './Hand'
-import PlayerChoices from './PlayerChoices'
+import HandContainer from '../containers/HandContainer'
+import PlayerChoicesContainer from '../containers/PlayerChoicesContainer'
  
 const App = () => (
   <MuiThemeProvider>
   	<div>
-	    <Hand />
-	    <PlayerChoices />
+	    <HandContainer />
+	    <PlayerChoicesContainer />
 	</div>
   </MuiThemeProvider>
 )

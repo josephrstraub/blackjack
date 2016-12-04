@@ -1,14 +1,10 @@
 import React from 'react'
 import PlayingCard from './PlayingCard'
 
-const cards = [
-	{value: 10, suit: "clubs"},
-	{value: "ace", suit: "diamonds"},
-]
 
-const Hand = ({value, suit}) => (
+const Hand = ({ hand }) => (
 	<div>
-		{cards.map(card => <PlayingCard value={card.value} suit={card.suit} />)}
+		{hand.map(card => <PlayingCard value={card.value} suit={card.suit} />)}
 	</div>
 )
  
