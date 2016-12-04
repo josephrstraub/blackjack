@@ -13,6 +13,7 @@ const PlayingCard = ({value, suit}) => (
 	<Paper style={style} zDepth={1}>
 		<img
 			src={process.env.PUBLIC_URL + `/img/cards/${value}_of_${suit}.svg`}
+			alt={`${value} of ${suit}`}
 			style={{width: "100%"}}/>
 	</Paper>
 )
