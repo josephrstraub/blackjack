@@ -5,6 +5,8 @@ const playerHand = (state = [], action) => {
 				...state,
 				action.card
 			]
+		case 'NEW_HAND':
+			return []
 		default:
 			return state
 	}
