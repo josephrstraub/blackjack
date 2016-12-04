@@ -6,7 +6,7 @@ injectTapEventPlugin()
  
 const App = () => (
   <MuiThemeProvider>
-    <PlayingCard />
+    <PlayingCard value="4" suit="hearts"/>
   </MuiThemeProvider>
 )
  
