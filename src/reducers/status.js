@@ -4,6 +4,10 @@ const status = (state = "playing", action) => {
 			return "won"
 		case 'LOSE':
 			return "lost"
+		case 'PUSH':
+			return "push"
+		case 'CLEAR':
+			return "playing"
 		default:
 			return state
 	}

@@ -35,6 +35,10 @@ const App = ({ status }) => (
 			open={status === "won"}
 			message={"You win!"}
 			autoHideDuration={2000} />
+		<Snackbar
+			open={status === "push"}
+			message={"You pushed this hand."}
+			autoHideDuration={2000} />
 	</Grid>
   </MuiThemeProvider>
 )

@@ -3,11 +3,10 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 
 const choices = ["Split", "Double", "Hit", "Stand"]
 
-const PlayerChoices = ({ dealNewHand, dealCard }) => (
+const PlayerChoices = ({ dealNewHand, dealCard, stand }) => (
 	<div>
-		{choices.map((choice, index) => (
-			<FloatingActionButton key={index} onClick={dealCard}>{choice}</FloatingActionButton>
-		))}
+		<FloatingActionButton onClick={stand}>Stand</FloatingActionButton>
+		<FloatingActionButton onClick={dealCard}>Hit</FloatingActionButton>
 		<FloatingActionButton onClick={dealNewHand}>Deal</FloatingActionButton>
 	</div>
 )

@@ -5,7 +5,7 @@ const dealerHand = (state = [], action) => {
 				...state,
 				action.card
 			]
-		case 'NEW_HAND':
+		case 'CLEAR':
 			return []
 		default:
 			return state

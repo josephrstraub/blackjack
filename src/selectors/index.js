@@ -25,7 +25,7 @@ export const getNextCard = createSelector(
 			[...playerHand, ...dealerHand],
 			_.isEqual
 		)
-		return remainingCards[0]
+		return _.sample(remainingCards)
 	}
 )
 
@@ -76,3 +76,18 @@ export const getDealerPoints = createSelector(
 		return totalPoints
 	}
 )
+
+export const getWinner = createSelector(
+	[getPlayerPoints, getDealerPoints],
+	(playerPoints, dealerPoints) => {
+		if (dealerPoints > playerPoints && dealerPoints < 22) {
+			return "LOSE"
+		} else if (dealerPoints === playerPoints) {
+			return "PUSH"
+		}
+		else {
+			return "WIN"
+		}
+	}
+)
+

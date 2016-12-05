@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { deal, dealCardToPlayer } from '../actions'
+import { deal, dealCardToPlayer , terminalDeal} from '../actions'
 import PlayerChoices from '../components/PlayerChoices'
 
 // const mapStateToProps = (state) => ({
@@ -8,7 +8,8 @@ import PlayerChoices from '../components/PlayerChoices'
 
 const mapDispatchToProps = (dispatch) => ({
 	dealNewHand: () => dispatch(deal()),
-	dealCard: () => dispatch(dealCardToPlayer())
+	dealCard: () => dispatch(dealCardToPlayer()),
+	stand: () => dispatch(terminalDeal())
 })
 
 export default connect(
