@@ -6,21 +6,27 @@ injectTapEventPlugin()
 import '../grid.css'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Snackbar from 'material-ui/Snackbar'
+import HeaderContainer from '../containers/HeaderContainer'
 import HandContainer from '../containers/HandContainer'
 import PlayerChoicesContainer from '../containers/PlayerChoicesContainer'
 import WagerSliderContainer from '../containers/WagerSliderContainer'
  
 const App = ({ status }) => (
   <MuiThemeProvider>
-  	<Grid>
+  	<Grid fluid style={{padding: 0}}>
   		<Row>
+	    	<Col xs={12}>
+	    		<HeaderContainer />
+	    	</Col>
+	    </Row>  		
+	    <Row>
 	    	<Col xs={6} xsOffset={3}>
-	    		<HandContainer dealer={true}/>
+	    		<HandContainer dealer={true} />
 	    	</Col>
 	    </Row>
 	    <Row>
 	    	<Col xs={6} xsOffset={3}>
-	    		<HandContainer dealer={false}/>
+	    		<HandContainer dealer={false} />
 	    	</Col>
 	    </Row>
 	    <Row>
