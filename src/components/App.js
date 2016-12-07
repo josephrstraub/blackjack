@@ -8,6 +8,7 @@ import { Grid, Row, Col } from 'react-bootstrap'
 import Snackbar from 'material-ui/Snackbar'
 import HandContainer from '../containers/HandContainer'
 import PlayerChoicesContainer from '../containers/PlayerChoicesContainer'
+import WagerSliderContainer from '../containers/WagerSliderContainer'
  
 const App = ({ status }) => (
   <MuiThemeProvider>
@@ -22,6 +23,11 @@ const App = ({ status }) => (
 	    		<HandContainer dealer={false}/>
 	    	</Col>
 	    </Row>
+	    <Row>
+	    	<Col xs={12} lg={4} lgOffset={4}>
+	    		<WagerSliderContainer />
+	    	</Col>
+	    </Row>	    
 	    <Row>
 	    	<Col xs={12} lg={4} lgOffset={4}>
 	    		<PlayerChoicesContainer />

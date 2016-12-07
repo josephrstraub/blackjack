@@ -1,7 +1,7 @@
 import { getPlayerPoints, getDealerPoints, getNextCard , getWinner } from '../selectors'
 
 export const dealCardToPlayer = () => (dispatch, getState) => {
-	if (getState().status === 'playing') {
+	if (getState().status === 'playing' || getState().status === 'dormant') {
 		let nextCard = getNextCard(getState())
 		dispatch({ type: 'CARD_DEAL_PLAYER', card: nextCard })
 		let playerScore = getPlayerPoints(getState())
@@ -29,6 +29,7 @@ export const dealCardToDealer = () => (dispatch, getState) => {
 export const deal = () => (dispatch, getState) => {
 	dispatch({ type: 'CLEAR' })
 	dispatch(dealCardToPlayer())
+	dispatch({ type: 'PLAYING' })
 	dispatch(dealCardToDealer())
 	dispatch(dealCardToPlayer())
 	dispatch(dealCardToDealer())
@@ -38,5 +39,11 @@ export const deal = () => (dispatch, getState) => {
 		dispatch({ type: 'WIN' })
 	} else if (playerScore === 21 && dealerScore === 21) {
 		dispatch({ type: 'PUSH' })
+	}
+}
+
+export const changeWagerSize = (size) => (dispatch, getState) => {
+	if (getState().status !== 'playing') {
+		dispatch({ type: 'WAGER_SIZE_CHANGE', size })
 	}
 }

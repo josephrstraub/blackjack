@@ -1,5 +1,7 @@
-const status = (state = "playing", action) => {
+const status = (state = "dormant", action) => {
 	switch(action.type) {
+		case 'PLAYING':
+			return "playing"
 		case 'WIN':
 			return "won"
 		case 'LOSE':
@@ -7,7 +9,7 @@ const status = (state = "playing", action) => {
 		case 'PUSH':
 			return "push"
 		case 'CLEAR':
-			return "playing"
+			return "dormant"
 		default:
 			return state
 	}
