@@ -8,8 +8,8 @@ const style = {
 	display: 'inline-block'
 }
 
-const PlayingCard = ({value, suit}) => (
-	<Paper style={style} zDepth={1}>
+const PlayingCard = ({index, value, suit}) => (
+	<Paper style={{...style, position: "absolute", left: `${index * 20}px`}} zDepth={1}>
 		<img
 			src={process.env.PUBLIC_URL + `/img/cards/${value}_of_${suit}.svg`}
 			alt={`${value} of ${suit}`}

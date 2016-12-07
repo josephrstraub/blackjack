@@ -3,8 +3,8 @@ import PlayingCard from './PlayingCard'
 
 
 const Hand = ({ hand }) => (
-	<div>
-		{hand.map((card, index) => <PlayingCard key={index} value={card.value} suit={card.suit} />)}
+	<div style={{position: "relative"}}>
+		{hand.map((card, index) => <PlayingCard key={index} index={index} value={card.value} suit={card.suit} />)}
 	</div>
 )
  
