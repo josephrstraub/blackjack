@@ -7,6 +7,7 @@ import '../grid.css'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Snackbar from 'material-ui/Snackbar'
 import HeaderContainer from '../containers/HeaderContainer'
+import FooterContainer from '../containers/FooterContainer'
 import HandContainer from '../containers/HandContainer'
 import PlayerChoicesContainer from '../containers/PlayerChoicesContainer'
 import WagerSliderContainer from '../containers/WagerSliderContainer'
@@ -37,6 +38,11 @@ const App = ({ status }) => (
 	    <Row>
 	    	<Col xs={12} lg={4} lgOffset={4}>
 	    		<PlayerChoicesContainer />
+	    	</Col>
+	    </Row>	    
+	    <Row>
+	    	<Col xs={12} style={{position: "fixed", bottom: "28px", left: 0, padding: 0}}>
+	    		<FooterContainer />
 	    	</Col>
 	    </Row>
 	   	<Snackbar
