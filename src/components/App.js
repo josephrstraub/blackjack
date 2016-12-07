@@ -51,18 +51,22 @@ const App = ({ status }) => (
 	    		<FooterContainer />
 	    	</Col>
 	    </Row>
-	   	<Snackbar
-			open={status === "lost"}
-			message={"Dealer wins. Sorry."}
-			autoHideDuration={2000} />
-		<Snackbar
-			open={status === "won"}
-			message={"You win!"}
-			autoHideDuration={2000} />
-		<Snackbar
-			open={status === "push"}
-			message={"You pushed this hand."}
-			autoHideDuration={2000} />
+	    <Row>
+	    	<Col xs={12} xsHidden>
+	    		<Snackbar
+					open={status === "lost"}
+					message={"Dealer wins. Sorry."}
+					autoHideDuration={2000} />
+				<Snackbar
+					open={status === "won"}
+					message={"You win!"}
+					autoHideDuration={2000} />
+				<Snackbar
+					open={status === "push"}
+					message={"You pushed this hand."}
+					autoHideDuration={2000} />
+			</Col>
+	    </Row>
 	</Grid>
   </MuiThemeProvider>
 )
