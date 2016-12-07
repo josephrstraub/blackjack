@@ -1,11 +1,13 @@
 import { getPlayerPoints, getDealerPoints, getNextCard , getWinner } from '../selectors'
 
 export const dealCardToPlayer = () => (dispatch, getState) => {
-	let nextCard = getNextCard(getState())
-	dispatch({ type: 'CARD_DEAL_PLAYER', card: nextCard })
-	let playerScore = getPlayerPoints(getState())
-	if ( playerScore > 21 ) {
-		dispatch({ type: 'LOSE' })
+	if (getState().status === 'playing') {
+		let nextCard = getNextCard(getState())
+		dispatch({ type: 'CARD_DEAL_PLAYER', card: nextCard })
+		let playerScore = getPlayerPoints(getState())
+		if ( playerScore > 21 ) {
+			dispatch({ type: 'LOSE' })
+		}
 	}
 }
 
