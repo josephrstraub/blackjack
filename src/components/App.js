@@ -31,7 +31,7 @@ const App = ({ status }) => (
 	    	</Col>
 	    </Row>
 	    <Row>
-	    	<Col xs={12} lg={4} lgOffset={4}>
+	    	<Col xs={10} xsOffset={1} lg={4} lgOffset={4}>
 	    		<WagerSliderContainer />
 	    	</Col>
 	    </Row>	    
