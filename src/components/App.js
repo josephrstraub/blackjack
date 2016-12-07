@@ -23,7 +23,7 @@ const App = ({ status }) => (
 	    	</Col>
 	    </Row>
 	    <Row>
-	    	<Col xs={4} xsOffset={4}>
+	    	<Col xs={12} lg={4} lgOffset={4}>
 	    		<PlayerChoicesContainer />
 	    	</Col>
 	    </Row>
