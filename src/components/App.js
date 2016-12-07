@@ -10,6 +10,7 @@ import HeaderContainer from '../containers/HeaderContainer'
 import FooterContainer from '../containers/FooterContainer'
 import HandContainer from '../containers/HandContainer'
 import PlayerChoicesContainer from '../containers/PlayerChoicesContainer'
+import PokerChips from './PokerChips'
 import WagerSliderContainer from '../containers/WagerSliderContainer'
  
 const App = ({ status }) => (
@@ -30,6 +31,11 @@ const App = ({ status }) => (
 	    		<HandContainer dealer={false} />
 	    	</Col>
 	    </Row>
+	    <Row>
+	    	<Col xs={4} xsOffset={4} lg={2} lgOffset={5}>
+	    		<PokerChips />
+	    	</Col>
+	    </Row>	    
 	    <Row>
 	    	<Col xs={10} xsOffset={1} lg={4} lgOffset={4}>
 	    		<WagerSliderContainer />
