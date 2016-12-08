@@ -2,7 +2,6 @@ import React from 'react'
 import Paper from 'material-ui/Paper'
 
 const getStyle = (index) => ({
-	width: "40%",
 	margin: "5%",
 	textAlign: "center",
 	display: "inline-block",
@@ -12,7 +11,7 @@ const getStyle = (index) => ({
 
 
 const PlayingCard = ({index, value, suit}) => (
-	<Paper style={getStyle(index)} zDepth={1}>
+	<Paper className="playing-card" style={getStyle(index)} zDepth={1}>
 		<img
 			src={process.env.PUBLIC_URL + `/img/cards/${value}_of_${suit}.svg`}
 			alt={`${value} of ${suit}`}

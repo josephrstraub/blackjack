@@ -15,59 +15,37 @@ import WagerSliderContainer from '../containers/WagerSliderContainer'
  
 const App = ({ status }) => (
   <MuiThemeProvider>
-  	<Grid fluid style={{padding: 0}}>
-  		<Row>
-	    	<Col xs={12}>
-	    		<HeaderContainer />
-	    	</Col>
-	    </Row>  		
-	    <Row>
-	    	<Col xs={6} xsOffset={3}>
-	    		<HandContainer dealer={true} />
-	    	</Col>
-	    </Row>
-	    <Row>
-	    	<Col xs={6} xsOffset={3}>
-	    		<HandContainer dealer={false} />
-	    	</Col>
-	    </Row>
-	    <Row>
-	    	<Col xs={4} xsOffset={4} lg={2} lgOffset={5}>
-	    		<PokerChips />
-	    	</Col>
-	    </Row>	    
-	    <Row>
-	    	<Col xs={10} xsOffset={1} lg={4} lgOffset={4}>
-	    		<WagerSliderContainer />
-	    	</Col>
-	    </Row>	    
-	    <Row>
-	    	<Col xs={12} lg={4} lgOffset={4}>
-	    		<PlayerChoicesContainer />
-	    	</Col>
-	    </Row>	    
-	    <Row>
-	    	<Col xs={12} style={{position: "fixed", bottom: "28px", left: 0, padding: 0}}>
-	    		<FooterContainer />
-	    	</Col>
-	    </Row>
-	    <Row>
-	    	<Col xs={12} xsHidden>
-	    		<Snackbar
-					open={status === "lost"}
-					message={"Dealer wins. Sorry."}
-					autoHideDuration={2000} />
-				<Snackbar
-					open={status === "won"}
-					message={"You win!"}
-					autoHideDuration={2000} />
-				<Snackbar
-					open={status === "push"}
-					message={"You pushed this hand."}
-					autoHideDuration={2000} />
-			</Col>
-	    </Row>
-	</Grid>
+  	<div>
+	  	<div id="wrap">
+		  	<Grid id="main" fluid style={{padding: 0}}>
+		  		<Row><Col xs={12}><HeaderContainer /></Col></Row>  		
+			    <Row><Col xs={6} xsOffset={3}><HandContainer dealer={true} /></Col></Row>
+			    <Row><Col xs={6} xsOffset={3}><HandContainer dealer={false} /></Col></Row>
+			    <Row><Col xs={4} xsOffset={4} lg={2} lgOffset={5}><PokerChips /></Col></Row>	    
+			    <Row><Col xs={10} xsOffset={1} lg={4} lgOffset={4}><WagerSliderContainer /></Col></Row>	    
+			    <Row><Col xs={12} lg={4} lgOffset={4}><PlayerChoicesContainer /></Col></Row>	    
+			    <Row>
+			    	<Col xs={12} xsHidden>
+			    		<Snackbar
+							open={status === "lost"}
+							message={"Dealer wins. Sorry."}
+							autoHideDuration={2000} />
+						<Snackbar
+							open={status === "won"}
+							message={"You win!"}
+							autoHideDuration={2000} />
+						<Snackbar
+							open={status === "push"}
+							message={"You pushed this hand."}
+							autoHideDuration={2000} />
+					</Col>
+			    </Row>
+			</Grid>
+		</div>
+		<div id="footer">
+	    	<FooterContainer />
+	    </div>
+	</div>
   </MuiThemeProvider>
 )
 

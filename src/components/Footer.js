@@ -10,7 +10,7 @@ const nearbyIcon = <IconLocationOn />
 
 const Footer = () => (
 	<Paper zDepth={1} style={{width: "100%"}}>
-		<BottomNavigation selectedIndex={0}>
+		<BottomNavigation selectedIndex={0} style={{marginTop: "-56px"}}>
 			<BottomNavigationItem
 				label="$500"
 				icon={<i className="fa fa-usd" aria-hidden="true"></i>} />
