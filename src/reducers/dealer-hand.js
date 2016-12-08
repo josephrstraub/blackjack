@@ -1,5 +1,7 @@
 const dealerHand = (state = [], action) => {
 	switch(action.type) {
+		case 'NEW_GAME_MAKE':
+			return []
 		case 'CARD_DEAL_DEALER':
 			return [
 				...state,

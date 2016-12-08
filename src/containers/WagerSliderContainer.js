@@ -3,13 +3,14 @@ import { changeWagerSize } from '../actions'
 import WagerSlider from '../components/WagerSlider'
 
 const mapStateToProps = (state) => ({
-	bankroll: state.bankroll,
-	currentWager: state.currentWager,
-	gameStatus: state.status
+	defaultValue: Math.min(state.bankroll, 100),
+	gameStatus: state.status,
+	maxBet: state.bankroll < 500 ? state.bankroll || 50 : 500,
+	wager: state.wager
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	changeWagerSize: (event, value) => dispatch(changeWagerSize(value))
+	handleChange: (event, value) => dispatch(changeWagerSize(value))
 })
 
 export default connect(
