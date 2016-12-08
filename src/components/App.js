@@ -12,6 +12,7 @@ import HandContainer from '../containers/HandContainer'
 import PlayerChoicesContainer from '../containers/PlayerChoicesContainer'
 import PokerChips from './PokerChips'
 import WagerSliderContainer from '../containers/WagerSliderContainer'
+import GameOverDialogContainer from '../containers/GameOverDialogContainer'
  
 const App = ({ status }) => (
   <MuiThemeProvider>
@@ -45,6 +46,7 @@ const App = ({ status }) => (
 		<div id="footer">
 	    	<FooterContainer />
 	    </div>
+	    <GameOverDialogContainer />
 	</div>
   </MuiThemeProvider>
 )
