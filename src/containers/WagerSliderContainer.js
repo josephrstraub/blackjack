@@ -3,6 +3,7 @@ import { changeWagerSize } from '../actions'
 import WagerSlider from '../components/WagerSlider'
 
 const mapStateToProps = (state) => ({
+	bankroll: state.bankroll,
 	currentWager: state.currentWager,
 	gameStatus: state.status
 })

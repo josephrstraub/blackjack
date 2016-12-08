@@ -6,10 +6,26 @@ export const dealCardToPlayer = () => (dispatch, getState) => {
 		dispatch({ type: 'CARD_DEAL_PLAYER', card: nextCard })
 		let playerScore = getPlayerPoints(getState())
 		if ( playerScore > 21 ) {
-			dispatch({ type: 'LOSE' })
+			dispatch(handleEndOfHand('LOSE'))
 		}
 	}
 }
+
+const handleEndOfHand = (outcome) => (dispatch, getState) => {
+	dispatch({ type: outcome })
+	let wagerSize = getState().wager
+	console.log(wagerSize)
+	if (outcome === 'WIN') {
+		dispatch(changePlayerBankroll(wagerSize))
+	} else if (outcome === 'LOSE') {
+		dispatch(changePlayerBankroll(wagerSize * -1))
+	}
+}
+
+const changePlayerBankroll = (amount) => ({
+	type: 'PLAYER_BANKROLL_CHANGE',
+	amount
+})
 
 export const terminalDeal = () => (dispatch, getState) => {
 	let dealerScore = getDealerPoints(getState())
@@ -18,7 +34,7 @@ export const terminalDeal = () => (dispatch, getState) => {
 		dealerScore = getDealerPoints(getState())
 	}
 	let winner = getWinner(getState())
-	dispatch({ type: winner })
+	dispatch(handleEndOfHand(winner))
 }
 
 export const dealCardToDealer = () => (dispatch, getState) => {
@@ -36,9 +52,9 @@ export const deal = () => (dispatch, getState) => {
 	let playerScore = getPlayerPoints(getState())
 	let dealerScore = getDealerPoints(getState())
 	if (playerScore === 21 && dealerScore !== 21) {
-		dispatch({ type: 'WIN' })
+		dispatch(handleEndOfHand('WIN'))
 	} else if (playerScore === 21 && dealerScore === 21) {
-		dispatch({ type: 'PUSH' })
+		dispatch(handleEndOfHand('PUSH'))
 	}
 }
 

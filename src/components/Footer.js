@@ -8,11 +8,11 @@ const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>
 const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>
 const nearbyIcon = <IconLocationOn />
 
-const Footer = () => (
+const Footer = ({ bankroll }) => (
 	<Paper zDepth={1} style={{width: "100%"}}>
 		<BottomNavigation selectedIndex={0} style={{marginTop: "-56px"}}>
 			<BottomNavigationItem
-				label="$500"
+				label={`$${bankroll}`}
 				icon={<i className="fa fa-usd" aria-hidden="true"></i>} />
 			<BottomNavigationItem
 				label="Hint"

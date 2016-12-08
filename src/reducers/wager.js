@@ -6,3 +6,5 @@ const wager = (state = 100, action) => {
 			return state
 	}
 }
+
+export default wager
