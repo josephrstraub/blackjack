@@ -15,7 +15,7 @@ const makeDeck = () => {
 
 const deck = makeDeck()
 const getPlayerHand = (state) => state.playerHand
-const getDealerHand = (state) => state.dealerHand
+const getDealerHand = (state) => state.dealerHand.contents
 
 export const getNextCard = createSelector(
 	[getPlayerHand, getDealerHand],

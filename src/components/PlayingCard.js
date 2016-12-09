@@ -10,13 +10,16 @@ const getStyle = (index) => ({
 })
 
 
-const PlayingCard = ({index, value, suit}) => (
-	<Paper className="playing-card" style={getStyle(index)} zDepth={1}>
-		<img
-			src={process.env.PUBLIC_URL + `/img/cards/${value}_of_${suit}.svg`}
-			alt={`${value} of ${suit}`}
-			style={{ display: "block", width: "100%" }}/>
-	</Paper>
-)
+const PlayingCard = ({hideCard, index, suit, value}) => {
+	let imageFile = hideCard ? "cardback.png" : `${value}_of_${suit}.svg`
+	return (
+		<Paper className="playing-card" style={getStyle(index)} zDepth={1}>
+			<img
+				src={`${process.env.PUBLIC_URL}/img/cards/${imageFile}`}
+				alt={`${value} of ${suit}`}
+				style={{ display: "block", width: "100%" }}/>
+		</Paper>
+	)
+}
  
 export default PlayingCard

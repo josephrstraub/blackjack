@@ -14,6 +14,10 @@ export const changeWagerSize = (size) => ({
 	size: size || 50
 })
 
+const revealHiddenCard = () => ({
+	type: 'HIDDEN_CARD_REVEAL'
+})
+
 const handleEndOfHand = (outcome) => (dispatch, getState) => {
 	dispatch({ type: outcome })
 	let { wager } = getState()
@@ -45,6 +49,7 @@ export const dealCardToDealer = () => (dispatch, getState) => {
 }
 
 export const terminalDeal = () => (dispatch, getState) => {
+	dispatch(revealHiddenCard())
 	let dealerScore = getDealerPoints(getState())
 	while (dealerScore < 17) {
 		dispatch(dealCardToDealer())
@@ -64,10 +69,13 @@ export const deal = () => (dispatch, getState) => {
 	let playerScore = getPlayerPoints(getState())
 	let dealerScore = getDealerPoints(getState())
 	if (playerScore === 21 && dealerScore !== 21) {
+		dispatch(revealHiddenCard())
 		dispatch(handleEndOfHand('WIN'))
 	} else if (playerScore === 21 && dealerScore === 21) {
+		dispatch(revealHiddenCard())
 		dispatch(handleEndOfHand('PUSH'))
 	} else if (dealerScore === 21) {
+		dispatch(revealHiddenCard())
 		dispatch(handleEndOfHand('LOSE'))
 	}
 }
