@@ -23,7 +23,7 @@ const RightMenu = () => (
 const Header = () => (
 	<AppBar
       id="header"
-    	title="Title"
+    	title="BlackJack"
     	iconElementLeft={<IconButton><NavigationClose /></IconButton>}
     	iconElementRight={<RightMenu />} />        
 )
