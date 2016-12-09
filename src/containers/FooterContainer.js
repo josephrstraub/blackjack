@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import Footer from '../components/Footer'
 
 const mapStateToProps = (state) => ({
-	bankroll: state.bankroll
+	bankroll: state.bankroll,
+	wager: state.wager
 })
 
 const mapDispatchToProps = (dispatch) => ({})

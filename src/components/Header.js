@@ -22,6 +22,7 @@ const RightMenu = () => (
 
 const Header = () => (
 	<AppBar
+      id="header"
     	title="Title"
     	iconElementLeft={<IconButton><NavigationClose /></IconButton>}
     	iconElementRight={<RightMenu />} />        
