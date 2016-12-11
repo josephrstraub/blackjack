@@ -3,7 +3,8 @@ import Hand from '../components/Hand'
 
 const mapStateToProps = (state, ownProps) => ({
 	hand: ownProps.dealer ? state.dealerHand.contents : state.playerHand,
-	hideCard: ownProps.dealer ? !state.dealerHand.isFullyVisible : false
+	firstCardIsVisible: state.dealerHand.isFullyVisible,
+	isDealerHand: ownProps.dealer
 })
 
 export default connect(mapStateToProps)(Hand)

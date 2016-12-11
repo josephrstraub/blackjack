@@ -1,0 +1,54 @@
+.flipper {
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+  -o-transition: 1s;
+  transition: 1s;
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+  position: relative;
+  height: 145.22px;
+  width: 100px;
+}
+
+.flipper.hole-card {
+  transform: rotateY(180deg);
+}
+
+.flipper.flip {
+  animation-name: rotate;
+  animation-duration: .7s;
+  animation-delay: .3s;
+  animation-fill-mode: forwards;
+}
+
+.flipper.slide {
+  animation: slide 1s;
+}
+
+@keyframes rotate {
+  0% { transform: rotateY(180deg); }
+  100% { transform: rotateY(0deg); }
+}
+
+@keyframes slide {
+  0% { transform: translateX(0); }
+  30% { transform: translateX(100%); }
+  70% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+}
+
+.front, .back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.front {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.back {
+  transform: rotateY(180deg);
+}

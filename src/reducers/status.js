@@ -4,6 +4,8 @@ const status = (state = "dormant", action) => {
 			return "playing"
 		case 'WIN':
 			return "won"
+		case 'IDLE':
+			return "idle"
 		case 'LOSE':
 			return "lost"
 		case 'PUSH':
