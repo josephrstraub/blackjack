@@ -14,21 +14,29 @@ export const changeWagerSize = (size) => ({
 	size: size || 50
 })
 
+export const doubleDown = () => ({
+	type: 'DOUBLE_DOWN'
+})
+
 const revealHiddenCard = () => ({
 	type: 'HIDDEN_CARD_REVEAL'
 })
 
 const handleEndOfHand = (outcome) => (dispatch, getState) => {
 	dispatch({ type: outcome })
-	let { wager } = getState()
+	let wagerSize = getState().wager.size
 	if (outcome === 'WIN') {
-		dispatch(changePlayerBankroll(wager))
+		dispatch(changePlayerBankroll(wagerSize))
 	} else if (outcome === 'LOSE') {
-		dispatch(changePlayerBankroll(wager * -1))
-		let { bankroll } = getState()
-		if (bankroll < wager) {
-			dispatch(changeWagerSize(bankroll || 50))
-		}
+		dispatch(changePlayerBankroll(wagerSize * -1))
+	}
+	if (getState().wager.isDouble) {
+		dispatch({ type: 'RESET_DOUBLE' })
+		wagerSize = getState().wager.size
+	}
+	let { bankroll } = getState()
+	if (bankroll < wagerSize) {
+		dispatch(changeWagerSize(bankroll || 50))
 	}
 }
 
