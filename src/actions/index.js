@@ -4,7 +4,6 @@ import _ from 'lodash'
 export const makeNewGame = () => ({ type: 'NEW_GAME_MAKE' })
 export const changeWagerSize = (size) => ({ type: 'WAGER_SIZE_CHANGE', size: size || 50 })
 const changePlayerBankroll = (amount) => ({ type: 'PLAYER_BANKROLL_CHANGE', amount })
-const revealHiddenCard = () => ({ type: 'HIDDEN_CARD_REVEAL' })
 
 export const doubleDown = () => (dispatch, getState) => {
 	dispatch({ type: 'DOUBLE_DOWN' })
@@ -88,7 +87,7 @@ const dealCardToDealerIfLegal = () => (dispatch, getState) => {
 }
 
 export const terminalDeal = () => (dispatch, getState) => {
-	dispatch(revealHiddenCard())
+	dispatch({ type: 'HIDDEN_CARD_REVEAL' })
 	setTimeout(
 		() => {
 			dispatch(dealCardToDealerIfLegal())
