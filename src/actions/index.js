@@ -42,7 +42,9 @@ const handleEndOfRound = () => (dispatch, getState) => {
 		} else if ( playerScore === 21 && hand.cards.length === 2 && dealerScore === 21 && dealerHand.cards.length === 2 ) {
 			winnings = 0
 		} else if (playerScore < 22 && (dealerScore > 21 || dealerScore < playerScore)) { 
-			winnings += wagerSize 
+			winnings += wagerSize
+		} else if (playerScore === dealerScore) {
+			winnings = 0
 		} else {
 			winnings -= wagerSize
 		}
