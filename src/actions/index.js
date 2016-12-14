@@ -15,9 +15,13 @@ export const changeWagerSize = (size) => ({
 	size: size || 50
 })
 
-export const doubleDown = () => ({
-	type: 'DOUBLE_DOWN'
-})
+export const doubleDown = () => (dispatch, getState) => {
+	dispatch({ type: 'DOUBLE_DOWN' })
+	dispatch(dealCard(true, true))
+	if ( playerRoundIsOver(getState()) ) {
+		dispatch(terminalDeal())
+	}
+}
 
 const revealHiddenCard = () => ({
 	type: 'HIDDEN_CARD_REVEAL'
@@ -30,14 +34,26 @@ const handleEndOfRound = () => (dispatch, getState) => {
 	hands.filter(hand => !hand.isDealer).forEach(hand => {
 		let wagerSize = hand.isDouble ? wager * 2 : wager
 		let playerScore = getHandScore(hand.cards)
-		if (playerScore > 21) { winnings -= wagerSize }
-		if (playerScore < 22 && (dealerScore > 21 || dealerScore < playerScore)) { 
+		if (playerScore > 21) { 
+			winnings -= wagerSize 
+		} else if (playerScore < 22 && (dealerScore > 21 || dealerScore < playerScore)) { 
 			winnings += wagerSize 
 		} else {
 			winnings -= wagerSize
 		}
 	})
 	dispatch(changePlayerBankroll(winnings))
+}
+
+const checkForBust = () => (dispatch, getState) => {
+	let playerHand = _.find(getState().hands, { isActive: true }).cards
+	let playerScore = getHandScore(playerHand)
+	if ( playerScore > 21 ) {
+		dispatch({ type: 'HAND_ACTIONS_DISABLE' })
+		if ( playerRoundIsOver(getState()) ) {
+			dispatch(terminalDeal())
+		}
+	}
 }
 
 export const stand = () => (dispatch, getState) => {
@@ -47,19 +63,11 @@ export const stand = () => (dispatch, getState) => {
 	}
 }
 
-export const dealCard = (toPlayer = true) => (dispatch, getState) => {
+export const dealCard = (toPlayer = true, disableAfter = false) => (dispatch, getState) => {
 	let nextCard = getNextCard(getState())
 	dispatch({ type: 'CARD_DEAL', card: nextCard, toPlayer })
-	if (toPlayer) {
-		let playerHand = _.find(getState().hands, { isActive: true }).cards
-		let playerScore = getHandScore(playerHand)
-		if ( playerScore > 21 ) {
-			dispatch({ type: 'HAND_ACTIONS_DISABLE' })
-		}
-	}
-	if ( playerRoundIsOver(getState()) ) {
-		dispatch(handleEndOfRound())
-	}
+	if (toPlayer && !disableAfter) { dispatch(checkForBust()) }
+	if (disableAfter) { dispatch({ type: 'HAND_ACTIONS_DISABLE' }) }
 }
 
 const dealCardToDealerIfLegal = () => (dispatch, getState) => {

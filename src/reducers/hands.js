@@ -54,8 +54,8 @@ const hand = (state = {}, action) => {
 				}
 			}
 			return state
-		case 'DOUBLE':
-			if (state.id === action.id) {
+		case 'DOUBLE_DOWN':
+			if (state.isActive) {
 				return {
 					...state,
 					isDouble: true
@@ -71,7 +71,7 @@ const hand = (state = {}, action) => {
 			}
 			return state
 		case 'SPLIT':
-			if ( state.id === action.id ) {
+			if ( state.isActive ) {
 				return {
 					...state,
 					isActive: false,
@@ -95,7 +95,7 @@ const hands = (state = initialState, action) => {
 			return state.filter(h => h.id === 1 || h.isDealer).map(h => hand(h, action))
 		case 'CARD_DEAL':
 			return state.map(h => hand(h, action))	
-		case 'DOUBLE':
+		case 'DOUBLE_DOWN':
 			return state.map(h => hand(h, action))
 		case 'HAND_ACTIONS_DISABLE':
 			let activeId = _.find(state, 'isActive').id
