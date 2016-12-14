@@ -29,13 +29,18 @@ const revealHiddenCard = () => ({
 
 const handleEndOfRound = () => (dispatch, getState) => {
 	let { hands, wager } = getState()
-	let dealerScore = getHandScore(_.find(hands, 'isDealer').cards)
+	let dealerHand = _.find(hands, 'isDealer').cards
+	let dealerScore = getHandScore(dealerHand)
 	let winnings = 0
 	hands.filter(hand => !hand.isDealer).forEach(hand => {
 		let wagerSize = hand.isDouble ? wager * 2 : wager
 		let playerScore = getHandScore(hand.cards)
 		if (playerScore > 21) { 
 			winnings -= wagerSize 
+		} else if ( playerScore === 21 && hand.cards.length === 2 && (dealerScore !== 21 || dealerHand.cards.length > 2) ) {
+			winnings += wagerSize * 1.5
+		} else if ( playerScore === 21 && hand.cards.length === 2 && dealerScore === 21 && dealerHand.cards.length === 2 ) {
+			winnings = 0
 		} else if (playerScore < 22 && (dealerScore > 21 || dealerScore < playerScore)) { 
 			winnings += wagerSize 
 		} else {
