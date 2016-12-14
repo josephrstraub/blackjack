@@ -1,19 +1,10 @@
 import { getHandScore, getDealerHand, getNextCard, playerRoundIsOver } from '../selectors'
 import _ from 'lodash'
 
-export const makeNewGame = () => ({
-	type: 'NEW_GAME_MAKE'
-})
-
-const changePlayerBankroll = (amount) => ({
-	type: 'PLAYER_BANKROLL_CHANGE',
-	amount
-})
-
-export const changeWagerSize = (size) => ({
-	type: 'WAGER_SIZE_CHANGE',
-	size: size || 50
-})
+export const makeNewGame = () => ({ type: 'NEW_GAME_MAKE' })
+export const changeWagerSize = (size) => ({ type: 'WAGER_SIZE_CHANGE', size: size || 50 })
+const changePlayerBankroll = (amount) => ({ type: 'PLAYER_BANKROLL_CHANGE', amount })
+const revealHiddenCard = () => ({ type: 'HIDDEN_CARD_REVEAL' })
 
 export const doubleDown = () => (dispatch, getState) => {
 	dispatch({ type: 'DOUBLE_DOWN' })
@@ -23,10 +14,6 @@ export const doubleDown = () => (dispatch, getState) => {
 	}
 }
 
-const revealHiddenCard = () => ({
-	type: 'HIDDEN_CARD_REVEAL'
-})
-
 const handleEndOfRound = () => (dispatch, getState) => {
 	let { hands, wager } = getState()
 	let dealerHand = _.find(hands, 'isDealer').cards
@@ -35,18 +22,26 @@ const handleEndOfRound = () => (dispatch, getState) => {
 	hands.filter(hand => !hand.isDealer).forEach(hand => {
 		let wagerSize = hand.isDouble ? wager * 2 : wager
 		let playerScore = getHandScore(hand.cards)
-		if (playerScore > 21) { 
-			winnings -= wagerSize 
-		} else if ( playerScore === 21 && hand.cards.length === 2 && (dealerScore !== 21 || dealerHand.cards.length > 2) ) {
-			winnings += wagerSize * 1.5
-		} else if ( playerScore === 21 && hand.cards.length === 2 && dealerScore === 21 && dealerHand.cards.length === 2 ) {
-			winnings = 0
-		} else if (playerScore < 22 && (dealerScore > 21 || dealerScore < playerScore)) { 
-			winnings += wagerSize
-		} else if (playerScore === dealerScore) {
-			winnings = 0
+		if (playerScore > dealerScore) {
+		if (playerScore > 21) {
+				return winnings -= wagerSize
+			} else if (playerScore === 21 && hand.cards.length === 2) {
+				return winnings += wagerSize * 1.5
+			} else {
+				return winnings += wagerSize
+			}
+		} else if (dealerScore > playerScore) {
+			if (dealerScore < 22) {
+				return winnings -= wagerSize
+			} else if (playerScore < 22) {
+				return winnings += wagerSize
+			}
 		} else {
-			winnings -= wagerSize
+			if (hand.cards.length === 2 && dealerHand.cards.length !== 2) {
+				winnings += wagerSize * 1.5
+			} else if (hand.cards.length !== 2 && dealerHand.cards.length === 2) {
+				winnings -= wagerSize
+			}
 		}
 	})
 	dispatch(changePlayerBankroll(winnings))
