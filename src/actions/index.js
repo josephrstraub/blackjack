@@ -108,6 +108,7 @@ export const initialDeal = () => (dispatch, getState) => {
 	let dealerScore = getHandScore(dealerHand)
 	if (playerScore === 21 || dealerScore === 21) {
 		dispatch({ type: 'HAND_ACTIONS_DISABLE' })
+		dispatch({ type: 'HIDDEN_CARD_REVEAL' })
 		dispatch(handleEndOfRound())
 	}
 }
