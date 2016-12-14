@@ -106,10 +106,12 @@ export const initialDeal = () => (dispatch, getState) => {
 	dispatch(dealCard(false))
 	dispatch(dealCard())
 	dispatch(dealCard(false))
-	let playerHand = _.find(getState().hands, { isDealer: false }).cards
-	console.log(playerHand)
+	let playerHand = _.find(getState().hands, { id: 1 }).cards
 	let dealerHand = _.find(getState().hands, { isDealer: true }).cards
 	let playerScore = getHandScore(playerHand)
 	let dealerScore = getHandScore(dealerHand)
-	if (playerScore === 21 || dealerScore === 21) { dispatch(handleEndOfRound) }
+	if (playerScore === 21 || dealerScore === 21) {
+		dispatch({ type: 'HAND_ACTIONS_DISABLE' })
+		dispatch(handleEndOfRound())
+	}
 }
