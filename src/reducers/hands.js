@@ -47,6 +47,11 @@ const hand = (state = {}, action) => {
 					cards: [],
 					isDouble: false
 				}
+			} else {
+				return {
+					...state,
+					cards: []
+				}
 			}
 			return state
 		case 'DOUBLE':
