@@ -11,7 +11,7 @@ const pseudoStyles = {
     zIndex: "-1"
 }
 
-const WagerSlider = ({ defaultValue, gameStatus, maxBet, wager, handleChange }) => (
+const WagerSlider = ({ defaultValue, isDisabled, maxBet, wager, handleChange }) => (
 	<div style={{position: "relative", width: "80%", margin: "auto"}}>
 		<Slider
 			min={0}
@@ -19,7 +19,7 @@ const WagerSlider = ({ defaultValue, gameStatus, maxBet, wager, handleChange }) 
 			step={50}
 			defaultValue={defaultValue}
 			value={wager}
-			disabled={gameStatus === "playing"}
+			disabled={isDisabled}
 			onChange={handleChange}
 			style={{width: `${maxBet/5}%`}}
 			sliderStyle={{marginBottom: "24px"}} />		

@@ -1,11 +1,11 @@
 import { combineReducers } from "redux"
 import hands from './hands'
-import wagers from './wagers'
+import wager from './wager'
 import bankroll from './bankroll'
 
 export default combineReducers({
 	hands,
-	wagers,
+	wager,
 	bankroll
 })
 

@@ -1,49 +1,80 @@
 import { createSelector } from 'reselect'
 import _ from 'lodash'
 
-const values = ["ace", 2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king"]
+const names = ["ace", 2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king"]
 const suits = ["clubs", "diamonds", "hearts", "spades"]
 const makeDeck = () => {
 	let deck = []
 	suits.forEach(suit => {
-		values.forEach(value => {
-			deck.push({value, suit})
+		names.forEach(name => {
+			let value
+			if (name === "ace") {
+				value = 11
+			} else if (typeof name === 'string') {
+				value = 10
+			} else {
+				value = name
+			}
+			deck.push({value, suit, name})
 		})
 	})
 	return deck
 }
 
 const deck = makeDeck()
-const getPlayerHand = (state) => state.playerHand
-const getDealerHand = (state) => state.dealerHand.contents
+const getHands = (state) => state.hands
+export const getPlayerHands = (state) => state.hands.filter(hand => !hand.isDealer)
+export const getPlayerHand = (state, props) => {
+	let hand = _.find(state.hands, { id: props.id })
+	if (hand) {
+		return hand.cards
+	} else {
+		return []
+	}
+}
+export const playerRoundIsOver = (state) => !(_.some(state.hands, 'isActive'))
+export const getDealerHand = (state) => _.find(state.hands, 'isDealer').cards
+
+export const getActiveHand = createSelector(
+	[getHands],
+	(hands) => _.find(hands, 'isActive')
+)
+
+const getActiveHandCards = createSelector(
+	[getActiveHand],
+	(hand) => hand ? hand.cards : []
+)
+
+export const currentWagerIsDouble = createSelector(
+	[getActiveHand],
+	(hand = {}) => hand.isDouble
+)
 
 export const getNextCard = createSelector(
-	[getPlayerHand, getDealerHand],
-	(playerHand, dealerHand) => {
+	[getPlayerHands, getDealerHand],
+	(playerHands, dealerHand) => {
+		let playerCards = playerHands.reduce((cards, cur) => [...cards, ...cur.cards], [])
 		let remainingCards = _.differenceWith(
 			deck,
-			[...playerHand, ...dealerHand],
+			[...playerCards, ...dealerHand],
 			_.isEqual
 		)
 		return _.sample(remainingCards)
 	}
 )
 
-const getCardValue = (value) => {
-	if (value === "ace") {
+const getCardValue = (card) => {
+	if (card.name === "ace") {
 		return 11
 	}
-	if (typeof value === 'string') {
-		return 10
-	}
-	return value
+	return card.value
 }
 
-export const getPlayerPoints = createSelector(
-	[getPlayerHand],
-	(playerHand) => {
-		let numberOfAces = playerHand.filter(card => card.value === "ace").length
-		let totalPoints = playerHand.reduce((total, cur) => total + getCardValue(cur.value), 0)
+export const getActiveHandScore = createSelector(
+	[getActiveHandCards],
+	(hand) => {
+		let numberOfAces = hand.filter(card => card.name === "ace").length
+		let totalPoints = hand.reduce((total, cur) => total + getCardValue(cur), 0)
 		if (totalPoints > 21) {
 			while (numberOfAces > 0) {
 				totalPoints = totalPoints - 10
@@ -58,11 +89,27 @@ export const getPlayerPoints = createSelector(
 	}
 )
 
-export const getDealerPoints = createSelector(
+export const getHandScore = (cards) => {
+	let numberOfAces = cards.filter(card => card.name === "ace").length
+	let totalPoints = cards.reduce((total, cur) => total + getCardValue(cur), 0)
+	if (totalPoints > 21) {
+		while (numberOfAces > 0) {
+			totalPoints = totalPoints - 10
+			if (totalPoints < 22) {
+				return totalPoints
+			}
+			numberOfAces --
+		}
+		return totalPoints
+	}
+	return totalPoints
+}
+
+export const getDealerScore = createSelector(
 	[getDealerHand],
 	(dealerHand) => {
-		let numberOfAces = dealerHand.filter(card => card.value === "ace").length
-		let totalPoints = dealerHand.reduce((total, cur) => total + getCardValue(cur.value), 0)
+		let numberOfAces = dealerHand.filter(card => card.name === "ace").length
+		let totalPoints = dealerHand.reduce((total, cur) => total + getCardValue(cur), 0)
 		if (totalPoints > 21) {
 			while (numberOfAces > 0) {
 				totalPoints = totalPoints - 10
@@ -74,20 +121,6 @@ export const getDealerPoints = createSelector(
 			return totalPoints
 		}
 		return totalPoints
-	}
-)
-
-export const getWinner = createSelector(
-	[getPlayerPoints, getDealerPoints],
-	(playerPoints, dealerPoints) => {
-		if (dealerPoints > playerPoints && dealerPoints < 22) {
-			return "LOSE"
-		} else if (dealerPoints === playerPoints) {
-			return "PUSH"
-		}
-		else {
-			return "WIN"
-		}
 	}
 )
 

@@ -3,7 +3,7 @@ import Footer from '../components/Footer'
 
 const mapStateToProps = (state) => ({
 	bankroll: state.bankroll,
-	wager: state.wager.size
+	wager: state.wager
 })
 
 const mapDispatchToProps = (dispatch) => ({})

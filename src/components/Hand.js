@@ -3,7 +3,7 @@ import { Col } from 'react-bootstrap'
 import PlayingCard from './PlayingCard'
 
 
-const Hand = ({ firstCardIsVisible, hand, isDealerHand }) => (
+const Hand = ({ hand, isDealerHand, shouldAnimate }) => (
 	<Col xs={6} xsOffset={3}>
 		<div style={{position: "relative"}}>
 			{hand.map((card, index) => (
@@ -11,9 +11,9 @@ const Hand = ({ firstCardIsVisible, hand, isDealerHand }) => (
 					key={index}
 					index={index}
 					isHoleCard={index === 0 && isDealerHand}
-					shouldAnimate={firstCardIsVisible && isDealerHand}
+					animation={shouldAnimate && index === 0 ? "flip" : shouldAnimate && index === 1 ? "slide" : ""}
 					suit={card.suit}
-					value={card.value} />
+					name={card.name} />
 			))}
 		</div>
 	</Col>

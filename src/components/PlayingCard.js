@@ -9,21 +9,15 @@ const getStyle = (index) => ({
 	left: index === 0 ? 0 : `${index * 20}px`
 })
 
-const getClassName = (index, shouldAnimate) => {
-	if (index === 0 && shouldAnimate) { return "flip" }
-	if (index === 1 && shouldAnimate) { return "slide" }
-}
-
-
-const PlayingCard = ({index, isHoleCard, suit, shouldAnimate, value}) => {
+const PlayingCard = ({index, isHoleCard, suit, animation, name}) => {
 	return (
 			<div
-				className={`flipper ${getClassName(index, shouldAnimate)} ${isHoleCard ? "hole-card" : ""}`}
+				className={`flipper ${animation} ${isHoleCard ? "hole-card" : ""}`}
 				style={getStyle(index)}>
 				<Paper className="playing-card front" zDepth={1}>
 					<img
-						src={`${process.env.PUBLIC_URL}/img/cards/${value}_of_${suit}.svg`}
-						alt={`${value} of ${suit}`}
+						src={`${process.env.PUBLIC_URL}/img/cards/${name}_of_${suit}.svg`}
+						alt={`${name} of ${suit}`}
 						style={{ display: "block", width: "100%" }}/>
 				</Paper>		
 				<Paper className="playing-card back" zDepth={1}>

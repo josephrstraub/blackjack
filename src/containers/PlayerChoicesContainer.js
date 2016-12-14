@@ -1,15 +1,24 @@
 import { connect } from 'react-redux'
-import { deal, dealCardToPlayer, doubleDown, terminalDeal} from '../actions'
+import { initialDeal, dealCard, doubleDown, terminalDeal} from '../actions'
+import { currentWagerIsDouble } from '../selectors'
+import _ from 'lodash'
 import PlayerChoices from '../components/PlayerChoices'
 
-const mapStateToProps = (state) => ({
-	canDoubleDown: state.bankroll >= state.wager.size * 2 && !state.wager.isDouble,
-	gameStatus: state.status
-})
+const mapStateToProps = (state) => {
+	if ( !(_.some(state.hands, 'isActive')) ) {
+		return { canDeal: true }
+	}
+	return {
+		canDoubleDown: state.wager * 2 <= state.bankroll && !currentWagerIsDouble(state),
+		canHit: _.some(state.hands, 'isActive'),
+		canStand: _.some(state.hands, 'isActive'),
+		canDeal: false
+	}
+}
 
 const mapDispatchToProps = (dispatch) => ({
-	dealNewHand: () => dispatch(deal()),
-	dealCard: () => dispatch(dealCardToPlayer()),
+	dealNewHand: () => dispatch(initialDeal()),
+	dealCard: () => dispatch(dealCard()),
 	doubleDown: () => dispatch(doubleDown()),
 	stand: () => dispatch(terminalDeal())
 })
