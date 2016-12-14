@@ -17,8 +17,10 @@ const App = ({ playerHands }) => (
   	<div id="container">
   		<HeaderContainer />
   		<div id="main">
-			<HandContainer dealer={true} />
-			<ul style={{display: "flex", justifyContent: "space-between", margin: 0, listStyleType: "none"}}>
+  			<ul style={{display: "flex", justifyContent: "center", margin: 0, padding: 0, listStyleType: "none"}}>
+				<li style={{position: "relative", width: "25%"}}><HandContainer dealer={true} /></li>
+			</ul>
+			<ul style={{display: "flex", justifyContent: playerHands.length > 1 ? "space-around" : "center", margin: 0, padding: 0, listStyleType: "none"}}>
 				{ playerHands.map(hand => <li style={{position: "relative", width: "25%"}}><HandContainer dealer={false} id={hand.id} /></li>) }
 			</ul>	
 		</div>
