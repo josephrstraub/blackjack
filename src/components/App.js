@@ -5,6 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 import { getPlayerHands } from '../selectors'
 import '../grid.css'
+import { Col } from 'react-bootstrap'
 import Snackbar from 'material-ui/Snackbar'
 import HeaderContainer from '../containers/HeaderContainer'
 import FooterContainer from '../containers/FooterContainer'
@@ -15,9 +16,11 @@ const App = ({ playerHands }) => (
   <MuiThemeProvider>
   	<div id="container">
   		<HeaderContainer />
-  		<div id="main"> 		
+  		<div id="main">
 			<HandContainer dealer={true} />
-			{ playerHands.map(hand => <HandContainer dealer={false} id={hand.id} />) }	
+			<ul style={{display: "flex", justifyContent: "space-between", margin: 0, listStyleType: "none"}}>
+				{ playerHands.map(hand => <li style={{position: "relative", width: "25%"}}><HandContainer dealer={false} id={hand.id} /></li>) }
+			</ul>	
 		</div>
 		<div id="snackbar-container">    
 			<Snackbar
