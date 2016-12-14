@@ -45,11 +45,6 @@ const getActiveHandCards = createSelector(
 	(hand) => hand ? hand.cards : []
 )
 
-export const currentWagerIsDouble = createSelector(
-	[getActiveHand],
-	(hand = {}) => hand.isDouble
-)
-
 export const getNextCard = createSelector(
 	[getPlayerHands, getDealerHand],
 	(playerHands, dealerHand) => {
