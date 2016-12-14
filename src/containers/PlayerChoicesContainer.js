@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { initialDeal, dealCard, doubleDown, terminalDeal} from '../actions'
+import { initialDeal, dealCard, doubleDown, stand} from '../actions'
 import { currentWagerIsDouble } from '../selectors'
 import _ from 'lodash'
 import PlayerChoices from '../components/PlayerChoices'
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch) => ({
 	dealNewHand: () => dispatch(initialDeal()),
 	dealCard: () => dispatch(dealCard()),
 	doubleDown: () => dispatch(doubleDown()),
-	stand: () => dispatch(terminalDeal())
+	stand: () => dispatch(stand())
 })
 
 export default connect(

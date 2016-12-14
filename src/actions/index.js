@@ -40,13 +40,22 @@ const handleEndOfRound = () => (dispatch, getState) => {
 	dispatch(changePlayerBankroll(winnings))
 }
 
+export const stand = () => (dispatch, getState) => {
+	dispatch({ type: 'HAND_ACTIONS_DISABLE' })
+	if ( playerRoundIsOver(getState()) ) {
+		dispatch(terminalDeal())
+	}
+}
+
 export const dealCard = (toPlayer = true) => (dispatch, getState) => {
 	let nextCard = getNextCard(getState())
 	dispatch({ type: 'CARD_DEAL', card: nextCard, toPlayer })
-	let playerHand = _.find(getState().hands, { isActive: true }).cards
-	let playerScore = getHandScore(playerHand)
-	if ( playerScore > 21 ) {
-		dispatch({ type: 'HAND_ACTIONS_DISABLE' })
+	if (toPlayer) {
+		let playerHand = _.find(getState().hands, { isActive: true }).cards
+		let playerScore = getHandScore(playerHand)
+		if ( playerScore > 21 ) {
+			dispatch({ type: 'HAND_ACTIONS_DISABLE' })
+		}
 	}
 	if ( playerRoundIsOver(getState()) ) {
 		dispatch(handleEndOfRound())
