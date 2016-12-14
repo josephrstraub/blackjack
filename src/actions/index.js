@@ -23,23 +23,27 @@ const handleEndOfRound = () => (dispatch, getState) => {
 		let wagerSize = hand.isDouble ? wager * 2 : wager
 		let playerScore = getHandScore(hand.cards)
 		if (playerScore > dealerScore) {
-		if (playerScore > 21) {
-				return winnings -= wagerSize
+			if (playerScore > 21) {
+				winnings -= wagerSize
 			} else if (playerScore === 21 && hand.cards.length === 2) {
-				return winnings += wagerSize * 1.5
+				winnings += wagerSize * 1.5
 			} else {
-				return winnings += wagerSize
+				winnings += wagerSize
 			}
 		} else if (dealerScore > playerScore) {
 			if (dealerScore < 22) {
-				return winnings -= wagerSize
+				winnings -= wagerSize
 			} else if (playerScore < 22) {
-				return winnings += wagerSize
+				winnings += wagerSize
 			}
-		} else {
+		} else if (dealerScore === 21 && playerScore === 21) {
 			if (hand.cards.length === 2 && dealerHand.cards.length !== 2) {
 				winnings += wagerSize * 1.5
 			} else if (hand.cards.length !== 2 && dealerHand.cards.length === 2) {
+				winnings -= wagerSize
+			}
+		} else {
+			if (playerScore > 21) {
 				winnings -= wagerSize
 			}
 		}
