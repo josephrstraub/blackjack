@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { initialDeal, dealCard, doubleDown, stand} from '../actions'
+import { initialDeal, dealCard, doubleDown, split, stand} from '../actions'
 import _ from 'lodash'
 import PlayerChoices from '../components/PlayerChoices'
 
@@ -18,6 +18,7 @@ const mapDispatchToProps = (dispatch) => ({
 	dealNewHand: () => dispatch(initialDeal()),
 	dealCard: () => dispatch(dealCard()),
 	doubleDown: () => dispatch(doubleDown()),
+	split: () => dispatch(split()),
 	stand: () => dispatch(stand())
 })
 

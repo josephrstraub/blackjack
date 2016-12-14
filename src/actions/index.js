@@ -4,6 +4,7 @@ import _ from 'lodash'
 export const makeNewGame = () => ({ type: 'NEW_GAME_MAKE' })
 export const changeWagerSize = (size) => ({ type: 'WAGER_SIZE_CHANGE', size: size || 50 })
 const changePlayerBankroll = (amount) => ({ type: 'PLAYER_BANKROLL_CHANGE', amount })
+export const split = () => ({ type: 'SPLIT' })
 
 export const doubleDown = () => (dispatch, getState) => {
 	dispatch({ type: 'DOUBLE_DOWN' })
@@ -15,8 +16,8 @@ export const doubleDown = () => (dispatch, getState) => {
 
 const handleEndOfRound = () => (dispatch, getState) => {
 	let { hands, wager } = getState()
-	let dealerHand = _.find(hands, 'isDealer').cards
-	let dealerScore = getHandScore(dealerHand)
+	let dealerHand = _.find(hands, 'isDealer')
+	let dealerScore = getHandScore(dealerHand.cards)
 	let winnings = 0
 	hands.filter(hand => !hand.isDealer).forEach(hand => {
 		let wagerSize = hand.isDouble ? wager * 2 : wager
@@ -66,6 +67,7 @@ export const stand = () => (dispatch, getState) => {
 
 export const dealCard = (toPlayer = true, disableAfter = false) => (dispatch, getState) => {
 	let nextCard = getNextCard(getState())
+	nextCard = {name: "8", suit: "clubs", value: 8}
 	dispatch({ type: 'CARD_DEAL', card: nextCard, toPlayer })
 	if (toPlayer && !disableAfter) { dispatch(checkForBust()) }
 	if (disableAfter) { dispatch({ type: 'HAND_ACTIONS_DISABLE' }) }

@@ -103,7 +103,7 @@ const hands = (state = initialState, action) => {
 		case 'HIDDEN_CARD_REVEAL':
 			return state.map(h => hand(h, action))
 		case 'SPLIT':
-			let newCard = _.find(state, {id: action.id}).cards[1]
+			let newCard = _.find(state, 'isActive').cards[1]
 			return _.orderBy([
 				...state.map(h => hand(h, action)),
 				hand(undefined, { type: 'ADD_HAND', id: action.id + 1, card: newCard })

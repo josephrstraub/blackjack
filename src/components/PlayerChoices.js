@@ -5,8 +5,9 @@ const styles = {
 	margin: "10px 5px"
 }
 
-const PlayerChoices = ({ canDoubleDown, canHit, canStand, canDeal, dealNewHand, dealCard, doubleDown, stand }) => (
+const PlayerChoices = ({ canDoubleDown, canHit, canSplit, canStand, canDeal, dealNewHand, dealCard, doubleDown, split, stand }) => (
 	<div style={{textAlign: "center"}}>
+		<FloatingActionButton disabled={!canSplit} style={styles} onClick={split}>Split</FloatingActionButton>
 		<FloatingActionButton disabled={!canDoubleDown} style={styles} onClick={doubleDown}>Double</FloatingActionButton>
 		<FloatingActionButton disabled={!canStand} style={styles} onClick={stand}>Stand</FloatingActionButton>
 		<FloatingActionButton disabled={!canHit} style={styles} onClick={dealCard}>Hit</FloatingActionButton>
