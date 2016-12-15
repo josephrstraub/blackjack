@@ -12,6 +12,11 @@ body,
    height:100%;
 }
 
+li.hand {
+  position: relative;
+  width: 25%;
+}
+
 #container {
    min-height:100%;
    position:relative;
@@ -82,6 +87,9 @@ body,
 }
 
 @media(max-width: 767px) {
+  li.hand {
+    width: 53%;
+  }
 	.playing-card {
 		width: 100px;
 	}
