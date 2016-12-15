@@ -51,7 +51,10 @@ const handleEndOfRound = () => (dispatch, getState) => {
 	})
 	dispatch(changePlayerBankroll(winnings))
 	if (getState().autoDeal) {
-		dispatch(initialDeal())
+		setTimeout(
+			() => dispatch(initialDeal()),
+			2000
+		)
 	}
 }
 
@@ -123,6 +126,6 @@ export const initialDeal = () => (dispatch, getState) => {
 				dispatch(handleEndOfRound())
 			}
 		},
-		500
+		1000
 	)
 }
