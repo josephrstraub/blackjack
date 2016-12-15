@@ -1,7 +1,7 @@
 import { getHandScore, getDealerHand, getNextCard, playerRoundIsOver } from '../selectors'
 import _ from 'lodash'
 
-export const makeNewGame = () => ({ type: 'NEW_GAME_MAKE' })
+export const makeNewGame = () => ({ type: 'NEW_GAME' })
 export const changeWagerSize = (size) => ({ type: 'WAGER_SIZE_CHANGE', size: size || 50 })
 const changePlayerBankroll = (amount) => ({ type: 'PLAYER_BANKROLL_CHANGE', amount })
 export const split = () => ({ type: 'SPLIT' })
