@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { toggleAutoDeal } from '../actions'
 import Footer from '../components/Footer'
 
 const mapStateToProps = (state) => ({
@@ -6,7 +7,9 @@ const mapStateToProps = (state) => ({
 	wager: state.wager
 })
 
-const mapDispatchToProps = (dispatch) => ({})
+const mapDispatchToProps = (dispatch) => ({
+	toggleAutoDeal: () => dispatch(toggleAutoDeal())
+})
 
 export default connect(
 	mapStateToProps,

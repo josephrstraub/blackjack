@@ -1,11 +1,13 @@
 import { combineReducers } from "redux"
+import autoDeal from './auto-deal'
+import bankroll from './bankroll'
 import hands from './hands'
 import wager from './wager'
-import bankroll from './bankroll'
 
 export default combineReducers({
+	autoDeal,
+	bankroll,
 	hands,
-	wager,
-	bankroll
+	wager
 })
 

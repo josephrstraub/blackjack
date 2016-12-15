@@ -6,13 +6,16 @@ import Paper from 'material-ui/Paper'
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on'
 import PlayerChoicesContainer from '../containers/PlayerChoicesContainer'
 import PokerChips from './PokerChips'
+import Toggle from 'material-ui/Toggle'
 import WagerSliderContainer from '../containers/WagerSliderContainer'
 
-const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>
-const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>
-const nearbyIcon = <IconLocationOn />
+const spanStyles = {display: "flex", flexDirection: "column", justifyContent: "space-around", textAlign: "center"}
+const h3Styles = {
+	fontSize: ".7em",
+	margin: 0
+}
 
-const Footer = ({ bankroll, wager }) => (
+const Footer = ({ bankroll, wager, toggleAutoDeal }) => (
 	<div id="footer">
 		<section id="chips" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
 			<PokerChips />
@@ -20,15 +23,10 @@ const Footer = ({ bankroll, wager }) => (
 		</section>    
 	    <WagerSliderContainer />	    
 	    <PlayerChoicesContainer />
-		<Paper zDepth={1} style={{width: "100%"}}>
-			<BottomNavigation selectedIndex={0}>
-				<BottomNavigationItem
-					label={`$${bankroll}`}
-					icon={<i className="fa fa-usd" aria-hidden="true"></i>} />
-				<BottomNavigationItem
-					label="Hint"
-					icon={nearbyIcon} />
-			</BottomNavigation>
+		<Paper zDepth={1} style={{display: "flex", justifyContent: "space-around", width: "100%", height: "57px"}}>
+			<span style={spanStyles}><Toggle style={{width: "10%"}} onToggle={toggleAutoDeal} /><h3 style={h3Styles}>auto-deal</h3></span>
+			<span style={spanStyles}><i className="fa fa-usd" aria-hidden="true"></i><h3 style={h3Styles}>{bankroll}</h3></span>
+			<span style={spanStyles}><IconLocationOn /><h3 style={h3Styles}>help</h3></span>
 		</Paper>
 	</div>
 )

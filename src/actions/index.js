@@ -5,6 +5,7 @@ export const makeNewGame = () => ({ type: 'NEW_GAME' })
 export const changeWagerSize = (size) => ({ type: 'WAGER_SIZE_CHANGE', size: size || 50 })
 const changePlayerBankroll = (amount) => ({ type: 'PLAYER_BANKROLL_CHANGE', amount })
 export const split = () => ({ type: 'SPLIT' })
+export const toggleAutoDeal = () => ({ type: 'AUTO_DEAL_TOGGLE' })
 
 export const doubleDown = () => (dispatch, getState) => {
 	dispatch({ type: 'DOUBLE_DOWN' })
@@ -49,6 +50,9 @@ const handleEndOfRound = () => (dispatch, getState) => {
 		}
 	})
 	dispatch(changePlayerBankroll(winnings))
+	if (getState().autoDeal) {
+		dispatch(initialDeal())
+	}
 }
 
 const checkForBust = () => (dispatch, getState) => {
@@ -71,7 +75,6 @@ export const stand = () => (dispatch, getState) => {
 
 export const dealCard = (toPlayer = true, disableAfter = false) => (dispatch, getState) => {
 	let nextCard = getNextCard(getState())
-	nextCard = {name: "8", suit: "clubs", value: 8}
 	dispatch({ type: 'CARD_DEAL', card: nextCard, toPlayer })
 	if (toPlayer && !disableAfter) { dispatch(checkForBust()) }
 	if (disableAfter) { dispatch({ type: 'HAND_ACTIONS_DISABLE' }) }
@@ -85,7 +88,7 @@ const dealCardToDealerIfLegal = () => (dispatch, getState) => {
 				dispatch(dealCard(false))
 				dispatch(dealCardToDealerIfLegal())
 			},
-			500
+			1000
 		)
 	} else {
 		dispatch(handleEndOfRound())
@@ -104,17 +107,22 @@ export const terminalDeal = () => (dispatch, getState) => {
 
 export const initialDeal = () => (dispatch, getState) => {
 	dispatch({ type: 'NEW_HAND' })
-	dispatch(dealCard())
-	dispatch(dealCard(false))
-	dispatch(dealCard())
-	dispatch(dealCard(false))
-	let playerHand = _.find(getState().hands, { id: 1 }).cards
-	let dealerHand = _.find(getState().hands, { isDealer: true }).cards
-	let playerScore = getHandScore(playerHand)
-	let dealerScore = getHandScore(dealerHand)
-	if (playerScore === 21 || dealerScore === 21) {
-		dispatch({ type: 'HAND_ACTIONS_DISABLE' })
-		dispatch({ type: 'HIDDEN_CARD_REVEAL' })
-		dispatch(handleEndOfRound())
-	}
+	setTimeout(
+		() => {
+			dispatch(dealCard())
+			dispatch(dealCard(false))
+			dispatch(dealCard())
+			dispatch(dealCard(false))
+			let playerHand = _.find(getState().hands, { id: 1 }).cards
+			let dealerHand = _.find(getState().hands, { isDealer: true }).cards
+			let playerScore = getHandScore(playerHand)
+			let dealerScore = getHandScore(dealerHand)
+			if (playerScore === 21 || dealerScore === 21) {
+				dispatch({ type: 'HAND_ACTIONS_DISABLE' })
+				dispatch({ type: 'HIDDEN_CARD_REVEAL' })
+				dispatch(handleEndOfRound())
+			}
+		},
+		500
+	)
 }
