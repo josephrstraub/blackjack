@@ -32,7 +32,7 @@ export const getPlayerHand = (state, props) => {
 		return []
 	}
 }
-export const playerRoundIsOver = (state) => !(_.some(state.hands, 'isActive'))
+export const playerRoundIsOver = (state) => state.hands.length === 2 || !(_.some(state.hands, 'isActive'))
 export const getDealerHand = (state) => _.find(state.hands, 'isDealer').cards
 
 export const getActiveHand = createSelector(

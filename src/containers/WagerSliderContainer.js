@@ -3,9 +3,9 @@ import { changeWagerSize } from '../actions'
 import _ from 'lodash'
 import WagerSlider from '../components/WagerSlider'
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
 	defaultValue: Math.min(state.bankroll, 100),
-	isDisabled: _.some(state.hands, 'isActive'),
+	isDisabled: !state.game.isDormant,
 	maxBet: state.bankroll < 500 ? state.bankroll || 50 : 500,
 	wager: state.wager
 })

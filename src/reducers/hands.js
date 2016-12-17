@@ -31,7 +31,7 @@ const hand = (state = {}, action) => {
 				isDealer: false,
 				cards: [action.card]
 			}
-		case 'HAND_ACTIONS_DISABLE':
+		case 'HAND_DISABLE':
 			if (action.id === state.id || action.id - 1 === state.id) {
 				return {
 					...state,
@@ -97,17 +97,17 @@ const hands = (state = initialState, action) => {
 			return state.map(h => hand(h, action))	
 		case 'DOUBLE_DOWN':
 			return state.map(h => hand(h, action))
-		case 'HAND_ACTIONS_DISABLE':
+		case 'HAND_DISABLE':
 			let activeId = _.find(state, 'isActive').id
 			return state.map(h => hand(h, { ...action, id: activeId }))
 		case 'HIDDEN_CARD_REVEAL':
 			return state.map(h => hand(h, action))
 		case 'SPLIT':
 			let { id, cards } = _.find(state, 'isActive')
-			return _.orderBy([
+			return [
 				...state.map(h => hand(h, action)),
 				hand(undefined, { type: 'ADD_HAND', id: id + 1, card: cards[1] })
-			], 'id', 'asc')
+			]
 		default:
 			return state
 	}

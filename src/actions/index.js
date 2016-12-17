@@ -50,6 +50,7 @@ const handleEndOfRound = () => (dispatch, getState) => {
 		}
 	})
 	dispatch(changePlayerBankroll(winnings))
+	dispatch({ type: 'HAND_ENDED' })
 	if (getState().autoDeal) {
 		setTimeout(
 			() => dispatch(initialDeal()),
@@ -62,7 +63,6 @@ const checkForBust = () => (dispatch, getState) => {
 	let playerHand = _.find(getState().hands, { isActive: true }).cards
 	let playerScore = getHandScore(playerHand)
 	if ( playerScore > 21 ) {
-		dispatch({ type: 'HAND_ACTIONS_DISABLE' })
 		if ( playerRoundIsOver(getState()) ) {
 			dispatch(terminalDeal())
 		}
@@ -70,7 +70,6 @@ const checkForBust = () => (dispatch, getState) => {
 }
 
 export const stand = () => (dispatch, getState) => {
-	dispatch({ type: 'HAND_ACTIONS_DISABLE' })
 	if ( playerRoundIsOver(getState()) ) {
 		dispatch(terminalDeal())
 	}
@@ -80,7 +79,7 @@ export const dealCard = (toPlayer = true, disableAfter = false) => (dispatch, ge
 	let nextCard = getNextCard(getState())
 	dispatch({ type: 'CARD_DEAL', card: nextCard, toPlayer })
 	if (toPlayer && !disableAfter) { dispatch(checkForBust()) }
-	if (disableAfter) { dispatch({ type: 'HAND_ACTIONS_DISABLE' }) }
+	if (disableAfter) { dispatch({ type: 'HAND_DISABLE' }) }
 }
 
 const dealCardToDealerIfLegal = () => (dispatch, getState) => {
@@ -99,6 +98,8 @@ const dealCardToDealerIfLegal = () => (dispatch, getState) => {
 }
 
 export const terminalDeal = () => (dispatch, getState) => {
+	dispatch({ type: 'PLAYER_PERMISSIONS_DISABLE' })
+	dispatch({ type: 'HAND_DISABLE' })
 	dispatch({ type: 'HIDDEN_CARD_REVEAL' })
 	setTimeout(
 		() => {
@@ -121,9 +122,7 @@ export const initialDeal = () => (dispatch, getState) => {
 			let playerScore = getHandScore(playerHand)
 			let dealerScore = getHandScore(dealerHand)
 			if (playerScore === 21 || dealerScore === 21) {
-				dispatch({ type: 'HAND_ACTIONS_DISABLE' })
-				dispatch({ type: 'HIDDEN_CARD_REVEAL' })
-				dispatch(handleEndOfRound())
+				dispatch(terminalDeal())
 			}
 		},
 		1000
