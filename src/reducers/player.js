@@ -12,7 +12,7 @@ const player = (state = initialState, action) => {
 					canAct: true
 				}
 			}		
-		case 'PLAYER_PERMISSIONS_DISABLE':
+		case 'TERMINAL_DEAL':
 			return initialState
 		default:
 			return state

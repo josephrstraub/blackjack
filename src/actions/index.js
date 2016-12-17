@@ -98,9 +98,8 @@ const dealCardToDealerIfLegal = () => (dispatch, getState) => {
 }
 
 export const terminalDeal = () => (dispatch, getState) => {
-	dispatch({ type: 'PLAYER_PERMISSIONS_DISABLE' })
+	dispatch({ type: 'TERMINAL_DEAL' })
 	dispatch({ type: 'HAND_DISABLE' })
-	dispatch({ type: 'HIDDEN_CARD_REVEAL' })
 	setTimeout(
 		() => {
 			dispatch(dealCardToDealerIfLegal())

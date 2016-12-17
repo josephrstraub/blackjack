@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 const cards = (state = [], action) => {
 	switch(action.type) {
-		case 'HIDDEN_CARD_REVEAL':
+		case 'TERMINAL_DEAL':
 			return [
 				{ ...state[0], isVisible: true },
 				...state.slice(1)
@@ -62,7 +62,7 @@ const hand = (state = {}, action) => {
 				}
 			}
 			return state
-		case 'HIDDEN_CARD_REVEAL':
+		case 'TERMINAL_DEAL':
 			if (state.isDealer) {
 				return {
 					...state, 
@@ -100,7 +100,7 @@ const hands = (state = initialState, action) => {
 		case 'HAND_DISABLE':
 			let activeId = _.find(state, 'isActive').id
 			return state.map(h => hand(h, { ...action, id: activeId }))
-		case 'HIDDEN_CARD_REVEAL':
+		case 'TERMINAL_DEAL':
 			return state.map(h => hand(h, action))
 		case 'SPLIT':
 			let { id, cards } = _.find(state, 'isActive')

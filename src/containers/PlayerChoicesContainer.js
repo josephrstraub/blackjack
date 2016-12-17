@@ -6,10 +6,10 @@ import PlayerChoices from '../components/PlayerChoices'
 const mapStateToProps = (state) => {
 	let activeHand = _.find(state.hands, 'isActive') 
 	return {
-		canDoubleDown: !state.isDormant && state.player.permissions.canAct && state.wager * 2 <= state.bankroll && !activeHand.isDouble,
-		canHit: !state.isDormant && state.player.permissions.canAct,
-		canStand: !state.isDormant && state.player.permissions.canAct,
-		canSplit: !state.isDormant && state.player.permissions.canAct && activeHand.cards.length === 2 && activeHand.cards[0].name === activeHand.cards[1].name,
+		canDoubleDown: state.player.permissions.canAct && state.wager * 2 <= state.bankroll && !activeHand.isDouble,
+		canHit: state.player.permissions.canAct,
+		canStand: state.player.permissions.canAct,
+		canSplit: state.player.permissions.canAct && activeHand.cards.length === 2 && activeHand.cards[0].name === activeHand.cards[1].name,
 		canDeal: state.game.isDormant
 	}
 }
