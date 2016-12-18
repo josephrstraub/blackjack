@@ -91,6 +91,8 @@ const initialState = [
 
 const hands = (state = initialState, action) => {
 	switch(action.type) {
+		case 'NEW_GAME':
+			return initialState
 		case 'NEW_HAND':
 			return state.filter(h => h.id === 1 || h.isDealer).map(h => hand(h, action))
 		case 'CARD_DEAL':
