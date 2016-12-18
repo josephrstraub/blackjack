@@ -1,4 +1,4 @@
-import { getHandScore, getDealerHand, getNextCard, playerRoundIsOver } from '../selectors'
+import { getHandScore, getDealerHand, getPlayerHand, getNextCard, playerRoundIsOver } from '../selectors'
 import _ from 'lodash'
 
 export const makeNewGame = () => ({ type: 'NEW_GAME' })
@@ -135,15 +135,27 @@ export const terminalDeal = () => (dispatch, getState) => {
 
 export const initialDeal = () => (dispatch, getState) => {
 	dispatch({ type: 'NEW_HAND' })
-	dispatch(dealCard())
-	setTimeout(() => dispatch(dealCard(false)), 250)
-	setTimeout(() => dispatch(dealCard()), 500)
-	setTimeout(() => dispatch(dealCard(false)), 750)
-	let playerHand = _.find(getState().hands, { id: 1 }).cards
-	let dealerHand = _.find(getState().hands, { isDealer: true }).cards
-	let playerScore = getHandScore(playerHand)
-	let dealerScore = getHandScore(dealerHand)
-	if (playerScore === 21 || dealerScore === 21) {
-		dispatch(terminalDeal())
-	}
+	let promise = new Promise(
+		(resolve, reject) => {
+			dispatch(dealCard())
+			setTimeout(() => dispatch(dealCard(false)), 250)
+			setTimeout(() => dispatch(dealCard()), 500)
+			setTimeout(
+				() => {
+					dispatch(dealCard(false))
+					resolve(getState())
+				},
+				750
+			)
+		}
+	) 
+	promise.then(state => {
+		let playerHand = getPlayerHand(state, {id: 1})
+		let dealerHand = getDealerHand(state)
+		let playerScore = getHandScore(playerHand)
+		let dealerScore = getHandScore(dealerHand)
+		if (playerScore === 21 || dealerScore === 21) {
+			dispatch(terminalDeal())
+		}
+	})
 }
