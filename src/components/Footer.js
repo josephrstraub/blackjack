@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Chip from 'material-ui/Chip'
 import FontIcon from 'material-ui/FontIcon'
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation'
 import Paper from 'material-ui/Paper'
@@ -7,6 +6,7 @@ import IconLocationOn from 'material-ui/svg-icons/communication/location-on'
 import PlayerChoicesContainer from '../containers/PlayerChoicesContainer'
 import PokerChips from './PokerChips'
 import Toggle from 'material-ui/Toggle'
+import Tooltip from './Tooltip'
 import WagerSliderContainer from '../containers/WagerSliderContainer'
 
 const spanStyles = {display: "flex", flexDirection: "column", justifyContent: "space-around", textAlign: "center"}
@@ -19,7 +19,7 @@ const Footer = ({ autoDeal, bankroll, wager, toggleAutoDeal }) => (
 	<div id="footer">
 		<section id="chips" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
 			<PokerChips />
-			<Chip className="tooltip">{wager}</Chip>
+			<Tooltip wager={wager}/>
 		</section>    
 	    <WagerSliderContainer />	    
 	    <PlayerChoicesContainer />
