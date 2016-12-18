@@ -62,9 +62,12 @@ const handleEndOfRound = () => (dispatch, getState) => {
 			}
 		}
 	})
+	let { bankroll } = getState()
+	//because changePlayerBankroll is async
+	bankroll += winnings
 	dispatch(changePlayerBankroll(winnings))
 	dispatch({ type: 'HAND_ENDED' })
-	let { autoDeal, bankroll } = getState()
+	let { autoDeal } = getState()
 	if (autoDeal) {
 		if (wager <= bankroll) {
 			setTimeout(
@@ -73,6 +76,9 @@ const handleEndOfRound = () => (dispatch, getState) => {
 			)
 		} else {
 			dispatch({ type: 'AUTO_DEAL_TOGGLE' })
+		}
+	} else {
+		if (wager > bankroll) {
 			dispatch({ type: 'WAGER_SIZE_CHANGE', size: bankroll })
 		}
 	}
