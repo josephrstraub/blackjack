@@ -13,7 +13,15 @@ const PlayerChoices = ({ canDoubleDown, canHit, canSplit, canStand, canDeal, dea
 		<FloatingActionButton disabled={!canDoubleDown} style={styles} onClick={doubleDown}>Double</FloatingActionButton>
 		<FloatingActionButton disabled={!canStand} style={styles} onClick={stand}>Stand</FloatingActionButton>
 		<FloatingActionButton disabled={!canHit} style={styles} onClick={dealCard}>Hit</FloatingActionButton>
-		<FloatingActionButton disabled={!canDeal} style={styles} onClick={dealNewHand}>Deal</FloatingActionButton>
+		<FloatingActionButton
+			className={canDeal ? "attention-btn" : ""}
+			secondary
+			disabled={!canDeal}
+			style={styles}
+			onClick={dealNewHand}
+		>
+			Deal
+		</FloatingActionButton>
 	</div>
 )
 
