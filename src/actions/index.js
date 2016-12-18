@@ -51,11 +51,17 @@ const handleEndOfRound = () => (dispatch, getState) => {
 	})
 	dispatch(changePlayerBankroll(winnings))
 	dispatch({ type: 'HAND_ENDED' })
-	if (getState().autoDeal) {
-		setTimeout(
-			() => dispatch(initialDeal()),
-			2000
-		)
+	let { autoDeal, bankroll } = getState()
+	if (autoDeal) {
+		if (wager <= bankroll) {
+			setTimeout(
+				() => dispatch(initialDeal()),
+				2000
+			)
+		} else {
+			dispatch({ type: 'AUTO_DEAL_TOGGLE' })
+			dispatch({ type: 'WAGER_SIZE_CHANGE', size: bankroll })
+		}
 	}
 }
 
@@ -110,20 +116,15 @@ export const terminalDeal = () => (dispatch, getState) => {
 
 export const initialDeal = () => (dispatch, getState) => {
 	dispatch({ type: 'NEW_HAND' })
-	setTimeout(
-		() => {
-			dispatch(dealCard())
-			dispatch(dealCard(false))
-			dispatch(dealCard())
-			dispatch(dealCard(false))
-			let playerHand = _.find(getState().hands, { id: 1 }).cards
-			let dealerHand = _.find(getState().hands, { isDealer: true }).cards
-			let playerScore = getHandScore(playerHand)
-			let dealerScore = getHandScore(dealerHand)
-			if (playerScore === 21 || dealerScore === 21) {
-				dispatch(terminalDeal())
-			}
-		},
-		1000
-	)
+	dispatch(dealCard())
+	setTimeout(() => dispatch(dealCard(false)), 250)
+	setTimeout(() => dispatch(dealCard()), 500)
+	setTimeout(() => dispatch(dealCard(false)), 750)
+	let playerHand = _.find(getState().hands, { id: 1 }).cards
+	let dealerHand = _.find(getState().hands, { isDealer: true }).cards
+	let playerScore = getHandScore(playerHand)
+	let dealerScore = getHandScore(dealerHand)
+	if (playerScore === 21 || dealerScore === 21) {
+		dispatch(terminalDeal())
+	}
 }
