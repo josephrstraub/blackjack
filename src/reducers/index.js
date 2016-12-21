@@ -7,11 +7,6 @@ import player from './player'
 import wager from './wager'
 
 export default combineReducers({
-	autoDeal,
-	bankroll,
-	hands,
-	game,
-	player,
-	wager
+	player
 })
 

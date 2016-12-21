@@ -7,18 +7,15 @@ const styles = {
 	margin: "10px 5px"
 }
 
-const PlayerChoices = ({ canDoubleDown, canHit, canSplit, canStand, canDeal, dealNewHand, dealCard, doubleDown, split, stand, toggleAutoDeal }) => (
+const PlayerChoices = ({ activeHandIndex, nextCard, dealCard, split }) => (
 	<div style={{display: "flex", justifyContent: "center"}}>
-		<FloatingActionButton disabled={!canSplit} style={styles} onClick={split}>Split</FloatingActionButton>
-		<FloatingActionButton disabled={!canDoubleDown} style={styles} onClick={doubleDown}>Double</FloatingActionButton>
-		<FloatingActionButton disabled={!canStand} style={styles} onClick={stand}>Stand</FloatingActionButton>
-		<FloatingActionButton disabled={!canHit} style={styles} onClick={dealCard}>Hit</FloatingActionButton>
+		<FloatingActionButton style={styles} onClick={split.bind(null, activeHandIndex)}>Split</FloatingActionButton>
 		<FloatingActionButton
-			className={canDeal ? "attention-btn" : ""}
+			className={"attention-btn"}
 			secondary
-			disabled={!canDeal}
+			disabled={false}
 			style={styles}
-			onClick={dealNewHand}
+			onClick={dealCard.bind(null, activeHandIndex, nextCard)}
 		>
 			Deal
 		</FloatingActionButton>

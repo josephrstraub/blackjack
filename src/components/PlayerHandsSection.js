@@ -18,10 +18,10 @@ const listItemStyles = {
 
 const PlayerHandsSection = ({ hands, wager }) => (
 	<ul style={listStyles(hands.length > 1)}>
-		{ hands.map(hand => (
-			<li style={listItemStyles}>
-				<HandContainer dealer={false} id={hand.id} />
-				<PokerChips wager={hand.isDouble ? wager * 2 : wager} />
+		{ hands.map((hand, index) => (
+			<li key={index} style={listItemStyles}>
+				<HandContainer dealer={false} index={index} dog="yo" />
+				<PokerChips />
 			</li>
 		))}
 	</ul>

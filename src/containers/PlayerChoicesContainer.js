@@ -1,26 +1,16 @@
 import { connect } from 'react-redux'
-import { initialDeal, dealCard, doubleDown, split, stand, toggleAutoDeal} from '../actions'
+import { dealCard, split } from '../actions'
 import _ from 'lodash'
 import PlayerChoices from '../components/PlayerChoices'
 
-const mapStateToProps = (state) => {
-	let activeHand = _.find(state.hands, 'isActive') 
-	return {
-		canDoubleDown: state.player.permissions.canAct && state.wager * 2 <= state.bankroll && !activeHand.isDouble,
-		canHit: state.player.permissions.canAct,
-		canStand: state.player.permissions.canAct,
-		canSplit: state.player.permissions.canAct && activeHand.cards.length === 2 && activeHand.cards[0].name === activeHand.cards[1].name,
-		canDeal: state.game.isDormant
-	}
-}
+const mapStateToProps = (state) => ({
+	activeHandIndex: _.findLastIndex(state.player.hands, { isComplete: false }),
+	nextCard: { name: "6", value: 6, suit: "hearts" }
+})
 
 const mapDispatchToProps = (dispatch) => ({
-	dealNewHand: () => dispatch(initialDeal()),
-	dealCard: () => dispatch(dealCard()),
-	doubleDown: () => dispatch(doubleDown()),
-	split: () => dispatch(split()),
-	stand: () => dispatch(stand()),
-	toggleAutoDeal: () => dispatch(toggleAutoDeal())
+	dealCard: (index, card) => dispatch(dealCard(index, card)),
+	split: (index) => dispatch(split(index)),
 })
 
 export default connect(

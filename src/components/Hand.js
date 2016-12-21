@@ -3,9 +3,9 @@ import { Col } from 'react-bootstrap'
 import PlayingCard from './PlayingCard'
 
 
-const Hand = ({ hand, isDealerHand, shouldAnimate }) => (	
+const Hand = ({ cards, isDealerHand, shouldAnimate }) => (	
 	<div>
-		{hand.map((card, index) => (
+		{cards.map((card, index) => (
 			<PlayingCard
 				key={index}
 				index={index}

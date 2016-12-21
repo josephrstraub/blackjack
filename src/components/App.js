@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
-import { getPlayerHands } from '../selectors'
 import '../grid.css'
 import { Col } from 'react-bootstrap'
 import Snackbar from 'material-ui/Snackbar'
@@ -17,11 +16,11 @@ const App = ({ playerHands }) => (
   	<div id="container">
   		<HeaderContainer />
   		<div id="main">
-  			<ul style={{display: "flex", justifyContent: "center", margin: 0, padding: 0, listStyleType: "none"}}>
+  			{/*<ul style={{display: "flex", justifyContent: "center", margin: 0, padding: 0, listStyleType: "none"}}>
 				<li className="hand"><HandContainer dealer={true} /></li>
-			</ul>
+			</ul>*/}
 			<ul style={{display: "flex", justifyContent: playerHands.length > 1 ? "space-around" : "center", margin: 0, padding: 0, listStyleType: "none"}}>
-				{ playerHands.map(hand => <li className="hand"><HandContainer dealer={false} id={hand.id} /></li>) }
+				{ playerHands.map((hand, index) => <li key={index} className="hand"><HandContainer dealer={false} index={index} /></li>) }
 			</ul>	
 		</div>
 		<div id="snackbar-container">    
@@ -45,7 +44,7 @@ const App = ({ playerHands }) => (
 )
 
 const mapStateToProps = (state) => ({
-	playerHands: getPlayerHands(state)
+	playerHands: state.player.hands
 })
  
 export default connect(mapStateToProps)(App)
