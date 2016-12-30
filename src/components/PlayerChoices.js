@@ -7,15 +7,18 @@ const styles = {
 	margin: "10px 5px"
 }
 
-const PlayerChoices = ({ activeHandIndex, nextCard, dealCard, split }) => (
+const PlayerChoices = ({ activeHandIndex, deck, enabledActions, deal, doubleDown, hit, split, stand }) => (
 	<div style={{display: "flex", justifyContent: "center"}}>
-		<FloatingActionButton style={styles} onClick={split.bind(null, activeHandIndex)}>Split</FloatingActionButton>
+		<FloatingActionButton disabled={!enabledActions.includes('split')} style={styles} onClick={split.bind(null, activeHandIndex)}>Split</FloatingActionButton>
+		<FloatingActionButton disabled={!enabledActions.includes('double')} style={styles} onClick={doubleDown.bind(null, activeHandIndex, deck[0])}>Double</FloatingActionButton>
+		<FloatingActionButton disabled={!enabledActions.includes('stand')} style={styles} onClick={stand.bind(null, activeHandIndex)}>Stand</FloatingActionButton>
+		<FloatingActionButton disabled={!enabledActions.includes('hit')} style={styles} onClick={hit.bind(null, activeHandIndex, deck[0])}>Hit</FloatingActionButton>
 		<FloatingActionButton
+			disabled={!enabledActions.includes('deal') && activeHandIndex < 0}
 			className={"attention-btn"}
 			secondary
-			disabled={false}
 			style={styles}
-			onClick={dealCard.bind(null, activeHandIndex, nextCard)}
+			onClick={deal.bind(null, activeHandIndex, deck.slice(0, 2))}
 		>
 			Deal
 		</FloatingActionButton>
