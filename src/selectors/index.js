@@ -1,40 +1,35 @@
 import { createSelector } from 'reselect'
 import _ from 'lodash'
 
-const names = ["ace", 2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king"]
-const suits = ["clubs", "diamonds", "hearts", "spades"]
-const makeDeck = () => {
-	let deck = []
-	suits.forEach(suit => {
-		names.forEach(name => {
-			let value
-			if (name === "ace") {
-				value = 11
-			} else if (typeof name === 'string') {
-				value = 10
-			} else {
-				value = name
-			}
-			deck.push({value, suit, name})
-		})
-	})
-	return deck
+const getBankroll = ({ player }) => player.bankroll
+const getBaseWager = ({ player }) => player.baseWager
+const getHands = ({ player }) => player.hands
+const getScore = (cards) => cards.sort((a, b) => a.name[0] < b.name[0] ? 1 : -1)
+	.reduce((s, cur) => s + cur.value > 21 && cur.name === "ace" ? s + 1 : s + cur.value, 0)
+
+export const getActiveHand = createSelector([getHands], (hands) => hands.sort((a, b) => a.createdAt >= b.createdAt ? -1 : 1)
+	.find((hand) => !hand.isComplete))
+
+export const getEnabledActions = createSelector(
+	[getActiveHand, getBankroll, getBaseWager],
+	(hand, bankroll, baseWager) => {
+		if (!hand) { return [] }
+		let permissions = []
+		if (hand.cards.length > 0) { permissions = [ ...permissions, 'hit', 'stand' ] }
+		if (hand.cards.length === 2 && bankroll >= baseWager) { permissions.push('double') }
+		if (hand.cards.length === 2 && bankroll >= baseWager && hand.cards[0].value === hand.cards[1].value) { permissions.push('split') }
+		console.log(bankroll, baseWager)
+		return permissions
+	}
+)
+
+export const getHandStatus = (cards) => {
+	let score = getScore(cards)
+	if (score === 21 && cards.length === 2) {
+		return 'BLACKJACK'
+	} else if (score > 21) {
+		return 'BUST'
+	} else if (score === 21) {
+		return 'STAND'
+	} else { return 'PLAYING' }
 }
-
-const deck = makeDeck()
-
-// export const getNextCard = createSelector(
-// 	[getPlayerHands, getDealerHand],
-// 	(playerHands, dealerHand) => {
-// 		let playerCards = playerHands.reduce((cards, cur) => [...cards, ...cur.cards], [])
-// 		let remainingCards = _.differenceWith(
-// 			deck,
-// 			[...playerCards, ...dealerHand],
-// 			_.isEqual
-// 		)
-// 		return _.sample(remainingCards)
-// 	}
-// )
-
-
-
