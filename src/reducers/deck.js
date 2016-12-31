@@ -24,7 +24,7 @@ const deck = (state = makeDeck(), action) => {
 	switch (action.type) {
 		case 'DEAL_CARD_TO_PLAYER':
 		case 'DOUBLE_DOWN': return state.slice(1)
-		case 'NEW_HAND': makeDeck()
+		case 'RESET': makeDeck()
 		default: return state
 	}
 }

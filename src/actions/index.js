@@ -28,6 +28,7 @@ const endRoundIfApplicable = () => (dispatch, getState) => {
 	let { hands } = getState().player
 	if ( hands.every(hand => hand.isComplete) ) {
 		alert("We are done!")
+		dispatch(terminalDeal())
 		dispatch(handleEndOfRound())
 	}
 }
@@ -50,12 +51,12 @@ export const cardWasDealt = (index) => (dispatch, getState) => {
 	dispatch(endRoundIfApplicable())
 }
 
-export const doubleDown = (index, card) => (dispatch, getState) => {
+export const doubleDown = (index, card) => (dispatch) => {
 	dispatch({ type: 'DOUBLE_DOWN', index, card })
 	dispatch(cardWasDealt(index))
 }
 
-export const hit = (index, card) => (dispatch, getState) => {
+export const hit = (index, card) => (dispatch) => {
 	dispatch(dealCardToPlayer(index, card))
 	dispatch(cardWasDealt(index))
 }
@@ -63,5 +64,9 @@ export const hit = (index, card) => (dispatch, getState) => {
 export const stand = (index) => (dispatch) => {
 	dispatch({ type: 'STAND', index })
 	dispatch(endRoundIfApplicable())
+}
+
+const terminalDeal = () => (dispatch) => {
+	dispatch({ type: 'REVEAL_HIDDEN_CARD' })
 }
 
