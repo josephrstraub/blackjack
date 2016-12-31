@@ -4,7 +4,12 @@ import _ from 'lodash'
 export const makeNewGame = () => ({ type: 'NEW_GAME' })
 export const changeWagerSize = (size) => ({ type: 'CHANGE_WAGER_SIZE', size: size || 50 })
 const changePlayerBankroll = (amount) => ({ type: 'CHANGE_PLAYER_BANKROLL', amount })
-export const dealCardToDealer = (card) => ({ type: 'DEAL_CARD_TO_DEALER', card })
+export const dealCardToDealer = (card) => (dispatch, getState) => {
+	dispatch({ type: 'DEAL_CARD_TO_DEALER', card })
+	if (getState().dealer.hand.cards.length === 2) {
+		dispatch(cardWasDealt(0))
+	}
+}
 export const dealCardToPlayer = (index, card, disableAfter = false) => (dispatch) => {
 	dispatch({ type: 'DEAL_CARD_TO_PLAYER', index, card })
 	dispatch(cardWasDealt(index, disableAfter))
@@ -36,15 +41,18 @@ const endRoundIfApplicable = () => (dispatch, getState) => {
 	}
 }
 
-export const cardWasDealt = (index, disableAfter) => (dispatch, getState) => {
+export const cardWasDealt = (index, disableAfter = false) => (dispatch, getState) => {
 	let { hands, baseWager } = getState().player
 	let hand = hands[index]
-	switch (getHandStatus(hand.cards)) {
+	switch (getHandStatus(hand.cards, disableAfter)) {
 		case 'BUST':
 			dispatch({ type: 'BUST', index, amount: hand.wager.isDouble ? baseWager * 2 : baseWager })
 			break
-		case 'PLAYER_BLACKJACK':
-			dispatch({ type: 'PLAYER_BLACKJACK', index, amount: hand.wager.isDouble ? baseWager * 3 : baseWager * 1.5 })
+		case 'BLACKJACK':
+			let { cards: dealerCards } = getState().dealer.hand
+			if (dealerCards.length === 2 && getHandStatus(dealerCards) !== 'BLACKJACK') {
+				dispatch({ type: 'BLACKJACK', index, amount: hand.wager.isDouble ? baseWager * 3 : baseWager * 1.5 })
+			}
 			break
 		case 'FORCED_STAND':
 			dispatch(stand(index))
@@ -64,7 +72,14 @@ export const stand = (index) => (dispatch) => {
 	dispatch(endRoundIfApplicable())
 }
 
-const terminalDeal = () => (dispatch) => {
+const terminalDeal = () => (dispatch, getState) => {
 	dispatch({ type: 'REVEAL_HIDDEN_CARD' })
+	let { cards: dealerCards } = getState().dealer.hand
+	let dealerScore = getScore(dealerCards)
+	while (dealerScore < 17) {
+		let nextCard = getState().deck[0]
+		dispatch(dealCardToDealer(nextCard))
+		dealerScore = getScore(getState().dealer.hand.cards)
+	}
 }
 
