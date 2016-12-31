@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => ({
 		dispatch(cardWasDealt(index))
 	},
 	doubleDown: (index, card) => dispatch(doubleDown(index, card)),
-	hit: (index, card) => dispatch(hit(index, card)),
+	hit: (index, card) => dispatch(dealCardToPlayer(index, card)),
 	split: (index) => dispatch(split(index)),
 	stand: (index) => dispatch(stand(index))
 })

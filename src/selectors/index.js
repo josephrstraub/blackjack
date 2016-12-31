@@ -22,13 +22,13 @@ export const getEnabledActions = createSelector(
 	}
 )
 
-export const getHandStatus = (cards) => {
+export const getHandStatus = (cards, shouldDisable) => {
 	let score = getScore(cards)
 	if (score === 21 && cards.length === 2) {
 		return 'BLACKJACK'
 	} else if (score > 21) {
 		return 'BUST'
-	} else if (score === 21) {
-		return 'STAND'
+	} else if (score === 21 || shouldDisable) {
+		return 'FORCED_STAND'
 	} else { return 'PLAYING' }
 }
