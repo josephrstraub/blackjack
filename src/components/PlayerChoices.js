@@ -18,7 +18,7 @@ const PlayerChoices = ({ activeHandIndex, deck, enabledActions, deal, doubleDown
 			className={"attention-btn"}
 			secondary
 			style={styles}
-			onClick={deal.bind(null, activeHandIndex, deck.slice(0, 2))}
+			onClick={deal.bind(null, activeHandIndex, deck.slice(0, 4))}
 		>
 			Deal
 		</FloatingActionButton>

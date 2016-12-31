@@ -16,9 +16,9 @@ const App = ({ playerHands }) => (
   	<div id="container">
   		<HeaderContainer />
   		<div id="main">
-  			{/*<ul style={{display: "flex", justifyContent: "center", margin: 0, padding: 0, listStyleType: "none"}}>
+  			<ul style={{display: "flex", justifyContent: "center", margin: 0, padding: 0, listStyleType: "none"}}>
 				<li className="hand"><HandContainer dealer={true} /></li>
-			</ul>*/}
+			</ul>
 			<ul style={{display: "flex", justifyContent: playerHands.length > 1 ? "space-around" : "center", margin: 0, padding: 0, listStyleType: "none"}}>
 				{ playerHands.map((hand, index) => <li key={index} className="hand"><HandContainer dealer={false} index={index} /></li>) }
 			</ul>	

@@ -3,11 +3,11 @@ import _ from 'lodash'
 
 const getBankroll = ({ player }) => player.bankroll
 const getBaseWager = ({ player }) => player.baseWager
-const getHands = ({ player }) => player.hands
-const getScore = (cards) => cards.sort((a, b) => a.name[0] < b.name[0] ? 1 : -1)
+const getPlayerHands = ({ player }) => player.hands
+export const getScore = (cards) => cards.sort((a, b) => a.name[0] < b.name[0] ? 1 : -1)
 	.reduce((s, cur) => s + cur.value > 21 && cur.name === "ace" ? s + 1 : s + cur.value, 0)
 
-export const getActiveHand = createSelector([getHands], (hands) => hands.sort((a, b) => a.createdAt >= b.createdAt ? -1 : 1)
+export const getActiveHand = createSelector([getPlayerHands], (hands) => hands.sort((a, b) => a.createdAt >= b.createdAt ? -1 : 1)
 	.find((hand) => !hand.isComplete))
 
 export const getEnabledActions = createSelector(
@@ -18,7 +18,6 @@ export const getEnabledActions = createSelector(
 		if (hand.cards.length > 0) { permissions = [ ...permissions, 'hit', 'stand' ] }
 		if (hand.cards.length === 2 && bankroll >= baseWager) { permissions.push('double') }
 		if (hand.cards.length === 2 && bankroll >= baseWager && hand.cards[0].value === hand.cards[1].value) { permissions.push('split') }
-		console.log(bankroll, baseWager)
 		return permissions
 	}
 )

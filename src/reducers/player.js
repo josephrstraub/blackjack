@@ -10,7 +10,7 @@ const wager = (state = { isDouble: false, paymentIsSettled: false }, action) => 
 
 const hand = (state = { createdAt: Date.now(), cards: [], isComplete: false, wager: wager(undefined, {}) }, action) => {
 	switch (action.type) {
-		case 'DEAL_CARD': return { ...state, cards: [ ...state.cards, action.card ] }
+		case 'DEAL_CARD_TO_PLAYER': return { ...state, cards: [ ...state.cards, action.card ] }
 		case 'BLACKJACK':
 		case 'BUST': return { ...state, isComplete: true, wager: wager(state.wager, action) }
 		case 'DOUBLE_DOWN': return { ...state, cards: [ ...state.cards, action.card ], isComplete: true, wager: wager(state.wager, action) }
@@ -22,7 +22,7 @@ const hand = (state = { createdAt: Date.now(), cards: [], isComplete: false, wag
 
 const hands = (state = [ hand(undefined, {}) ], action) => {
 	switch (action.type) {
-		case 'DEAL_CARD':
+		case 'DEAL_CARD_TO_PLAYER':
 		case 'BLACKJACK':
 		case 'BUST':
 		case 'DOUBLE_DOWN':
@@ -43,6 +43,7 @@ const bankroll = (state = 500, action) => {
 	switch (action.type) {
 		case 'BLACKJACK': return state + action.amount
 		case 'BUST': return state - action.amount
+		case 'CHANGE_PLAYER_BANKROLL': return state + action.amount
 		default: return state
 	}
 }
