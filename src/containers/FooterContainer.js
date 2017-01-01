@@ -4,8 +4,8 @@ import Footer from '../components/Footer'
 
 const mapStateToProps = (state) => ({
 	autoDeal: state.autoDeal,
-	bankroll: state.bankroll,
-	wager: state.wager
+	bankroll: state.player.bankroll,
+	wager: state.player.baseWager
 })
 
 const mapDispatchToProps = (dispatch) => ({
