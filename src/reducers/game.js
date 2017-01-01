@@ -1,15 +1,12 @@
 const initialState = {
-	isDormant: true
+	roundComplete: true
 }
 
 const game = (state = initialState, action) => {
 	switch (action.type) {
-		case 'NEW_HAND':
-			return { isDormant: false }
-		case 'HAND_ENDED':
-			return { isDormant: true }
-		default: 
-			return state
+		case 'END_ROUND': return { ...state, roundComplete: true }
+		case 'RESET': return { ...state, roundComplete: false }
+		default: return state
 	}
 }
 

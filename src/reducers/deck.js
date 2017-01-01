@@ -25,7 +25,7 @@ const deck = (state = makeDeck(), action) => {
 		case 'DEAL_CARD_TO_DEALER':
 		case 'DEAL_CARD_TO_PLAYER':
 		case 'DOUBLE_DOWN': return state.slice(1)
-		case 'RESET': makeDeck()
+		case 'RESET': return makeDeck()
 		default: return state
 	}
 }

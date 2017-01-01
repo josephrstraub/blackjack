@@ -1,7 +1,5 @@
 import React from 'react'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
-import Toggle from 'material-ui/Toggle'
-import { Col } from 'react-bootstrap'
 
 const styles = {
 	margin: "10px 5px"
@@ -14,7 +12,7 @@ const PlayerChoices = ({ activeHandIndex, deck, enabledActions, deal, doubleDown
 		<FloatingActionButton disabled={!enabledActions.includes('stand')} style={styles} onClick={stand.bind(null, activeHandIndex)}>Stand</FloatingActionButton>
 		<FloatingActionButton disabled={!enabledActions.includes('hit')} style={styles} onClick={hit.bind(null, activeHandIndex, deck[0])}>Hit</FloatingActionButton>
 		<FloatingActionButton
-			disabled={!enabledActions.includes('deal') && activeHandIndex < 0}
+			disabled={!enabledActions.includes('deal')}
 			className={"attention-btn"}
 			secondary
 			style={styles}

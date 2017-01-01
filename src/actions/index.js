@@ -3,6 +3,7 @@ import _ from 'lodash'
 
 export const makeNewGame = () => ({ type: 'NEW_GAME' })
 export const changeWagerSize = (size) => ({ type: 'CHANGE_WAGER_SIZE', size: size || 50 })
+export const reset = () => ({ type: 'RESET' })
 const changePlayerBankroll = (amount) => ({ type: 'CHANGE_PLAYER_BANKROLL', amount })
 export const dealCardToDealer = (card) => (dispatch, getState) => {
 	dispatch({ type: 'DEAL_CARD_TO_DEALER', card })
@@ -30,12 +31,12 @@ const handleEndOfRound = () => (dispatch, getState) => {
 		}
 	})
 	dispatch(changePlayerBankroll(netWinnings))
+	dispatch({ type: 'END_ROUND' })
 }
 
 const endRoundIfApplicable = () => (dispatch, getState) => {
 	let { hands } = getState().player
 	if ( hands.every(hand => hand.isComplete) ) {
-		alert("We are done!")
 		dispatch(terminalDeal())
 		dispatch(handleEndOfRound())
 	}

@@ -35,6 +35,7 @@ const hands = (state = [ hand(undefined, {}) ], action) => {
 				hand(undefined, { ...action, card: state[action.index].cards[1] }),
 				...state.slice(action.index + 1)
 			]
+		case 'RESET': return [ hand(undefined, {}) ]
 		default: return state
 	}
 }
