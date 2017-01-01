@@ -26,7 +26,7 @@ const handleEndOfRound = () => (dispatch, getState) => {
 		let handScore = getScore(hand.cards)
 		if (handScore > dealerScore) {
 			netWinnings += hand.wager.isDouble ? baseWager * 2 : baseWager
-		} else if (handScore < dealerScore) {
+		} else if (handScore < dealerScore && dealerScore < 22) {
 			netWinnings -= hand.wager.isDouble ? baseWager * 2 : baseWager
 		}
 	})
