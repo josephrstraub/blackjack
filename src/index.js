@@ -8,8 +8,27 @@ import rootReducer from './reducers'
 import App from './components/App'
 import './index.css'
 
+const timeoutScheduler = store => next => action => {
+  if (!action.meta || !action.meta.delay) {
+    return next(action)
+  }
+
+  let p = new Promise((resolve, reject) => {
+	  let timeoutId = setTimeout(
+	    () => {
+	    	next(action)
+	    	resolve()
+	    },
+	    action.meta.delay
+	  )
+	  return timeoutId
+  })
+
+  return p
+}
+
 let store = createStore(rootReducer, composeWithDevTools(
-	applyMiddleware(thunk)
+	applyMiddleware(thunk, timeoutScheduler)
 ))
 
 ReactDOM.render(
