@@ -4,7 +4,7 @@ import PokerChipsSection from './PokerChipsSection'
 import Tooltip from './Tooltip'
 
 
-const Hand = ({ cards, isDealerHand, score, shouldAnimate }) => (	
+const Hand = ({ cards, hand, isDealerHand, score, shouldAnimate, wager }) => (	
 	<div>
 		{cards.map((card, index) => (
 			<PlayingCard
@@ -16,7 +16,7 @@ const Hand = ({ cards, isDealerHand, score, shouldAnimate }) => (
 				name={card.name} />
 		))}
 		{ cards.length ? <Tooltip number={score} customStyles={{position: "absolute", top: "20px", left: "-40px"}} /> :null }
-		{ !isDealerHand ? <PokerChipsSection /> : null }
+		{ !isDealerHand ? <PokerChipsSection wager={hand.wager.isDouble ? wager * 2 : wager}/> : null }
 	</div>
 )
  

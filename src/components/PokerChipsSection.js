@@ -12,7 +12,7 @@ const PokerChipsSection = ({ number, wager }) => (
 
 const mapStateToProps = (state, ownProps) => ({
 	number: ownProps.number,
-	wager: state.player.baseWager
+	wager: ownProps.wager
 })
 
 export default connect (mapStateToProps)(PokerChipsSection)
