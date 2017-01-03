@@ -1,9 +1,10 @@
 import React from 'react'
-import { Col } from 'react-bootstrap'
 import PlayingCard from './PlayingCard'
+import PokerChipsSection from './PokerChipsSection'
+import Tooltip from './Tooltip'
 
 
-const Hand = ({ cards, isDealerHand, shouldAnimate }) => (	
+const Hand = ({ cards, isDealerHand, score, shouldAnimate }) => (	
 	<div>
 		{cards.map((card, index) => (
 			<PlayingCard
@@ -14,6 +15,8 @@ const Hand = ({ cards, isDealerHand, shouldAnimate }) => (
 				suit={card.suit}
 				name={card.name} />
 		))}
+		{ cards.length ? <Tooltip number={score} customStyles={{position: "absolute", top: "20px", left: "-40px"}} /> :null }
+		{ !isDealerHand ? <PokerChipsSection /> : null }
 	</div>
 )
  

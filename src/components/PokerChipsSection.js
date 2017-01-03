@@ -3,14 +3,15 @@ import { connect } from 'react-redux'
 import PokerChips from './PokerChips'
 import Tooltip from './Tooltip'
 
-const PokerChipsSection = ({ wager }) => (
-	<section id="chips" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+const PokerChipsSection = ({ number, wager }) => (
+	<section id="chips" style={{display: "flex", alignItems: "center", position: "absolute", bottom: 0}}>
 		<PokerChips />
 		<Tooltip wager={wager}/>
 	</section> 
 )
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
+	number: ownProps.number,
 	wager: state.player.baseWager
 })
 

@@ -36,6 +36,10 @@ li.hand {
   transform: translateX(25%);
 }
 
+#chips { 
+  padding-left: 13%;
+}
+
 #container {
    min-height: 100%;
    position: relative;
@@ -44,38 +48,18 @@ li.hand {
 
 #main {
    padding: 10px;
-   padding-bottom: 269px;   /* Height of the footer */
+   padding-bottom: 454px;   /* Height of the footer */
 }
 
 #secondary {
-  position: absolute;
-  bottom: 57px;
-  width: 100%;
-  height: 212px;
-}
-
-#footer {
    position: absolute;
    bottom: -2px;
    width: 100%;
-   height: 57px;   /* Height of the footer */
+   height: 454px;   /* Height of the footer */
 }
 
-.tooltip {
-  position: relative;
-  height: 39px;
-}
-
-.tooltip:before {
-  content: '';
-  position: absolute;
-  left: -11px;
-  top: 15%;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 15px 20px 15px 0;
-  border-color: transparent #E0E0E0 transparent transparent;
+#player-hands {
+  min-height: 255px;
 }
 
 .poker-chip {
@@ -114,6 +98,9 @@ li.hand {
 }
 
 @media(max-width: 767px) {
+  #chips { 
+    padding-left: 17%;
+  }
   li.hand {
     width: 53%;
     transform: translateX(15%);

@@ -20,15 +20,17 @@ const App = ({ playerHands }) => (
   		<div id="main">
   			<ul style={{display: "flex", justifyContent: "center", margin: 0, padding: 0, listStyleType: "none", minHeight: "185px"}}>
 				<li className="hand"><HandContainer dealer={true} /></li>
-			</ul>
-			<ul style={{display: "flex", justifyContent: playerHands.length > 1 ? "space-around" : "center", margin: 0, padding: 0, listStyleType: "none"}}>
-				{ playerHands.map((hand, index) => <li key={index} className="hand"><HandContainer dealer={false} index={index} /></li>) }
 			</ul>	
 		</div>
 		<section id="secondary">
-			<PokerChipsSection />   
+			<ul id="player-hands" style={{display: "flex", justifyContent: playerHands.length > 1 ? "space-around" : "center", margin: 0, padding: 0, listStyleType: "none"}}>
+				{ playerHands.map((hand, index) => (
+					<li key={index} className="hand"><HandContainer dealer={false} index={index} /></li>
+				)) }
+			</ul>   
 		    <WagerSliderContainer />	    
 		    <PlayerChoicesContainer />
+		    <FooterContainer />
 		</section>
 		<div id="snackbar-container">    
 			<Snackbar
@@ -44,7 +46,6 @@ const App = ({ playerHands }) => (
 				message={"You pushed this hand."}
 				autoHideDuration={2000} />
 		</div>
-		<FooterContainer />
 	    <GameOverDialogContainer />
 	</div>
   </MuiThemeProvider>
