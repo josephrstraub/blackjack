@@ -77,13 +77,13 @@ export const stand = (index) => (dispatch) => {
 }
 
 const terminalDeal = () => (dispatch, getState) => {
+	dispatch({ type: 'REVEAL_HIDDEN_CARD' })
 	let p = new Promise((resolve, reject) => {
-		dispatch({ type: 'REVEAL_HIDDEN_CARD' })
 		function dealIfNeeded() {
 			let { cards: dealerCards } = getState().dealer.hand
-			let nextCard = getState().deck[0]
 			let dealerScore = getScore(dealerCards)
 			if (dealerScore < 17) {
+				let nextCard = getState().deck[0]
 				dispatch(dealCardToDealer(nextCard, dealerCards.length === 2 ? 1500 : 500)).then(() => {
 					dealIfNeeded() 
 				})
