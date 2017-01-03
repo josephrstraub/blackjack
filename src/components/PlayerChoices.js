@@ -13,7 +13,7 @@ const PlayerChoices = ({ activeHandIndex, deck, enabledActions, deal, doubleDown
 		<FloatingActionButton disabled={!enabledActions.includes('hit')} style={styles} onClick={hit.bind(null, activeHandIndex, deck[0])}>Hit</FloatingActionButton>
 		<FloatingActionButton
 			disabled={!enabledActions.includes('deal')}
-			className={"attention-btn"}
+			className={enabledActions.includes('deal') ? "attention-btn" : ""}
 			secondary
 			style={styles}
 			onClick={deal.bind(null, activeHandIndex, deck.slice(0, 4))}
