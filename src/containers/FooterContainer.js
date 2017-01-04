@@ -3,7 +3,7 @@ import { toggleAutoDeal } from '../actions'
 import Footer from '../components/Footer'
 
 const mapStateToProps = (state) => ({
-	autoDeal: state.autoDeal,
+	autoDeal: state.game.autoDeal,
 	bankroll: state.player.bankroll,
 	wager: state.player.baseWager
 })

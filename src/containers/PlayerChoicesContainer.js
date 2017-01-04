@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { dealCardToDealer, dealCardToPlayer, doubleDown, reset, split, stand } from '../actions'
+import { dealCardToPlayer, doubleDown, makeInitialDeal, split, stand } from '../actions'
 import { getActiveHandIndex, getEnabledActions } from '../selectors'
 import _ from 'lodash'
 import PlayerChoices from '../components/PlayerChoices'
@@ -11,13 +11,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	deal: (index, cards) => {
-		dispatch(reset())
-		dispatch(dealCardToPlayer(0, cards[0]))
-			.then(() => dispatch(dealCardToDealer(cards[1])))
-			.then(() => dispatch(dealCardToPlayer(0, cards[2])))
-			.then(() => dispatch(dealCardToDealer(cards[3])))
-	},
+	deal: (index, cards) => dispatch(makeInitialDeal()),
 	doubleDown: (index, card) => dispatch(doubleDown(index, card)),
 	hit: (index, card) => dispatch(dealCardToPlayer(index, card)),
 	split: (index) => dispatch(split(index)),

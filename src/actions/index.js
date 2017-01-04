@@ -3,10 +3,13 @@ import _ from 'lodash'
 
 export const makeNewGame = () => ({ type: 'NEW_GAME' })
 export const changeWagerSize = (size) => ({ type: 'CHANGE_WAGER_SIZE', size: size || 50 })
+export const toggleAutoDeal = () => ({ type: 'AUTO_DEAL_TOGGLE' })
 export const reset = () => ({ type: 'RESET' })
+export const split = (index) => ({ type: 'SPLIT', index })
+
 const changePlayerBankroll = (amount) => ({ type: 'CHANGE_PLAYER_BANKROLL', amount })
-export const dealCardToDealer = (card, delay) => (dispatch, getState) => {
-	return dispatch({ type: 'DEAL_CARD_TO_DEALER', card, meta: {delay: delay || 500} }).then(() => {
+export const dealCardToDealer = (card, delay = 500) => (dispatch, getState) => {
+	return dispatch({ type: 'DEAL_CARD_TO_DEALER', card, meta: {delay} }).then(() => {
 		if (getState().dealer.hand.cards.length === 2) {
 			dispatch(cardWasDealt(0))
 		}
@@ -19,8 +22,6 @@ export const dealCardToPlayer = (index, card, disableAfter = false) => (dispatch
 		Promise.resolve()	
 	})
 }
-export const split = (index) => ({ type: 'SPLIT', index })
-export const toggleAutoDeal = () => ({ type: 'AUTO_DEAL_TOGGLE' })
 
 const handleEndOfRound = () => (dispatch, getState) => {
 	let { baseWager, hands: playerHands } = getState().player
@@ -40,6 +41,18 @@ const handleEndOfRound = () => (dispatch, getState) => {
 	let { bankroll, baseWager: wager } = getState().player.bankroll
 	if (bankroll < wager) { dispatch(changeWagerSize(bankroll)) }
 	dispatch({ type: 'END_ROUND' })
+	if (getState().game.autoDeal) {
+		setTimeout(() => dispatch(makeInitialDeal()), 1500)
+	}
+}
+
+export const makeInitialDeal = () => (dispatch, getState) => {
+	dispatch(reset())
+	let { deck } = getState()
+	dispatch(dealCardToPlayer(0, deck[0]))
+		.then(() => dispatch(dealCardToDealer(deck[1])))
+		.then(() => dispatch(dealCardToPlayer(0, deck[2])))
+		.then(() => dispatch(dealCardToDealer(deck[3])))
 }
 
 const endRoundIfApplicable = () => (dispatch, getState) => {
