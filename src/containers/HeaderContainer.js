@@ -1,12 +1,16 @@
 import { connect } from 'react-redux'
-import { deal, dealCardToPlayer , terminalDeal} from '../actions'
+import { makeNewGame} from '../actions'
 import Header from '../components/Header'
 
-const mapStateToProps = (state) => ({})
-
-const mapDispatchToProps = (dispatch) => ({})
+const mapDispatchToProps = (dispatch) => ({
+	makeNewGame: (event, child) => {
+		if (event.target.innerText === "Start Over") {
+			dispatch(makeNewGame())
+		}
+	}
+})
 
 export default connect(
-	mapStateToProps,
+	null,
 	mapDispatchToProps
 )(Header)

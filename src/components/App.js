@@ -10,7 +10,6 @@ import FooterContainer from '../containers/FooterContainer'
 import HandContainer from '../containers/HandContainer'
 import GameOverDialogContainer from '../containers/GameOverDialogContainer'
 import PlayerChoicesContainer from '../containers/PlayerChoicesContainer'
-import PokerChipsSection from './PokerChipsSection'
 import WagerSliderContainer from '../containers/WagerSliderContainer'
  
 const App = ({ playerHands }) => (
