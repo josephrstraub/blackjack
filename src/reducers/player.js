@@ -16,6 +16,7 @@ const hand = (state = { createdAt: Date.now(), cards: [], isComplete: false, wag
 		case 'DOUBLE_DOWN': return { ...state, wager: wager(state.wager, action) }
 		case 'SPLIT': return { ...state, cards: [ action.card || state.cards[0] ] }
 		case 'STAND': return { ...state, isComplete: true }
+		case 'END_ROUND': return { ...state, wager: wager(undefined, {}) }
 		default: return state
 	}
 }
@@ -35,7 +36,9 @@ const hands = (state = [ hand(undefined, {}) ], action) => {
 				hand(undefined, { ...action, card: state[action.index].cards[1] }),
 				...state.slice(action.index + 1)
 			]
-		case 'RESET': return [ hand(undefined, {}) ]
+		case 'RESET': 
+		case 'NEW_GAME': return [ hand(undefined, {}) ]
+		case 'END_ROUND': return state.map(h => hand(h, action))
 		default: return state
 	}
 }
@@ -45,6 +48,7 @@ const bankroll = (state = 500, action) => {
 		case 'BLACKJACK': return state + action.amount
 		case 'BUST': return state - action.amount
 		case 'CHANGE_PLAYER_BANKROLL': return state + action.amount
+		case 'NEW_GAME': return 500
 		default: return state
 	}
 }
@@ -52,6 +56,7 @@ const bankroll = (state = 500, action) => {
 const baseWager = (state = 100, action) => {
 	switch (action.type) {
 		case 'CHANGE_WAGER_SIZE': return action.size
+		case 'NEW_GAME': return 100
 		default: return state
 	}
 }

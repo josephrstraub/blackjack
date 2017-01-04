@@ -21,15 +21,19 @@ export const getActiveHand = createSelector([getPlayerHands], (hands) => hands.s
 export const getActiveHandIndex = createSelector([getPlayerHands], (hands) => hands.sort((a, b) => a.createdAt >= b.createdAt ? -1 : 1)
 	.findIndex(hand => !hand.isComplete))
 
+const getTotalAmountWagered = createSelector([getPlayerHands, getBaseWager], (hands, wager) => hands.reduce((sum, cur) => {
+	return sum + cur.wager.isDouble ? wager * 2 : wager
+}, 0))
+
 export const getEnabledActions = createSelector(
-	[getActiveHand, getBankroll, getBaseWager, getRoundStatus],
-	(hand, bankroll, baseWager, roundComplete) => {
+	[getActiveHand, getBankroll, getBaseWager, getRoundStatus, getTotalAmountWagered],
+	(hand, bankroll, baseWager, roundComplete, amountWagered) => {
 		if (!hand && !roundComplete) { return [] }
 		if (roundComplete) { return ['deal'] }
 		let permissions = []
 		if (hand.cards.length > 0) { permissions = [ ...permissions, 'hit', 'stand' ] }
-		if (hand.cards.length === 2 && bankroll >= baseWager) { permissions.push('double') }
-		if (hand.cards.length === 2 && bankroll >= baseWager && hand.cards[0].value === hand.cards[1].value) { permissions.push('split') }
+		if (hand.cards.length === 2 && bankroll >= amountWagered + baseWager) { permissions.push('double') }
+		if (hand.cards.length === 2 && bankroll >= amountWagered + baseWager && hand.cards[0].value === hand.cards[1].value) { permissions.push('split') }
 		return permissions
 	}
 )

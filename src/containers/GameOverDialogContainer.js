@@ -3,7 +3,7 @@ import { makeNewGame } from '../actions'
 import GameOverDialog from '../components/GameOverDialog'
 
 const mapStateToProps = (state) => ({
-	outOfMoney: state.bankroll === 0
+	outOfMoney: state.player.bankroll === 0
 })
 
 const mapDispatchToProps = (dispatch) => ({
