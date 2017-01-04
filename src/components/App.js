@@ -18,7 +18,7 @@ const App = ({ playerHands }) => (
   	<div id="container">
   		<HeaderContainer />
   		<div id="main">
-  			<ul style={{display: "flex", justifyContent: "center", margin: 0, padding: 0, listStyleType: "none", minHeight: "185px"}}>
+  			<ul style={{display: "flex", justifyContent: "center", margin: 0, padding: 0, listStyleType: "none"}}>
 				<li className="hand"><HandContainer dealer={true} /></li>
 			</ul>	
 		</div>
