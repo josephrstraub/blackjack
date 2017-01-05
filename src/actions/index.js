@@ -8,6 +8,23 @@ export const toggleAutoDeal = () => ({ type: 'AUTO_DEAL_TOGGLE' })
 export const reset = () => ({ type: 'RESET' })
 export const split = (index) => ({ type: 'SPLIT', index })
 
+
+const dealCardToDealer = (card, delay = 500) => (dispatch, getState) => {
+	return dispatch({ type: 'DEAL_CARD_TO_DEALER', card, meta: {delay} }).then(() => {
+		if (getState().dealer.hand.cards.length === 2) {
+			dispatch(cardWasDealt(0))
+		}
+		Promise.resolve()
+	})
+}
+
+export const dealCardToPlayer = (index, card, disableAfter = false) => (dispatch) => {
+	return dispatch({ type: 'DEAL_CARD_TO_PLAYER', index, card, meta: {delay: 500} }).then(() => {
+		dispatch(cardWasDealt(index, disableAfter))	
+		Promise.resolve()	
+	})
+}
+
 const terminalDeal = () => (dispatch, getState) => {
 	dispatch({ type: 'REVEAL_HIDDEN_CARD' })
 	let p = new Promise((resolve, reject) => {
@@ -46,11 +63,13 @@ export const cardWasDealt = (index, disableAfter = false) => (dispatch, getState
 	switch (getHandStatus(hand.cards, disableAfter)) {
 		case 'BUST':
 			dispatch({ type: 'BUST', index, amount: hand.wager.isDouble ? baseWager * 2 : baseWager })
+			dispatch(endRoundIfApplicable())
 			break
 		case 'BLACKJACK':
 			let { cards: dealerCards } = getState().dealer.hand
 			if (dealerCards.length === 2 && getHandStatus(dealerCards) !== 'BLACKJACK') {
 				dispatch({ type: 'BLACKJACK', index, amount: hand.wager.isDouble ? baseWager * 3 : baseWager * 1.5 })
+				dispatch(endRoundIfApplicable())
 			}
 			break
 		case 'FORCED_STAND':
@@ -58,23 +77,6 @@ export const cardWasDealt = (index, disableAfter = false) => (dispatch, getState
 			break
 		default:
 	}
-	dispatch(endRoundIfApplicable())
-}
-
-const dealCardToDealer = (card, delay = 500) => (dispatch, getState) => {
-	return dispatch({ type: 'DEAL_CARD_TO_DEALER', card, meta: {delay} }).then(() => {
-		if (getState().dealer.hand.cards.length === 2) {
-			dispatch(cardWasDealt(0))
-		}
-		Promise.resolve()
-	})
-}
-
-export const dealCardToPlayer = (index, card, disableAfter = false) => (dispatch) => {
-	return dispatch({ type: 'DEAL_CARD_TO_PLAYER', index, card, meta: {delay: 500} }).then(() => {
-		dispatch(cardWasDealt(index, disableAfter))	
-		Promise.resolve()	
-	})
 }
 
 export const makeInitialDeal = () => (dispatch, getState) => {
