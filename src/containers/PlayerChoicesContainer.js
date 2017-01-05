@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => ({
 	deal: (index, cards) => dispatch(makeInitialDeal()),
 	doubleDown: (index, card) => dispatch(doubleDown(index, card)),
 	hit: (index, card) => dispatch(dealCardToPlayer(index, card)),
-	split: (index) => dispatch(split(index)),
+	split: (index, cards) => dispatch(split(index, cards)),
 	stand: (index) => dispatch(stand(index))
 })
 

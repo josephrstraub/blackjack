@@ -6,7 +6,11 @@ export const changeWagerSize = (size) => ({ type: 'CHANGE_WAGER_SIZE', size: siz
 const changePlayerBankroll = (amount) => ({ type: 'CHANGE_PLAYER_BANKROLL', amount })
 export const toggleAutoDeal = () => ({ type: 'AUTO_DEAL_TOGGLE' })
 export const reset = () => ({ type: 'RESET' })
-export const split = (index) => ({ type: 'SPLIT', index })
+export const split = (index, cards) => (dispatch) => {
+	dispatch({ type: 'SPLIT', index })
+	dispatch(dealCardToPlayer(index + 1, cards[0]))
+		.then(() => dispatch(dealCardToPlayer(index, cards[1])))
+}
 
 
 const dealCardToDealer = (card, delay = 500) => (dispatch, getState) => {
