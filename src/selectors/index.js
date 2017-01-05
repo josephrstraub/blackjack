@@ -5,7 +5,7 @@ const getBankroll = ({ player }) => player.bankroll
 const getBaseWager = ({ player }) => player.baseWager
 const getDealerHand = ({ dealer }) => dealer.hand
 const getPlayerHands = ({ player }) => player.hands
-export const getScore = (cards) => cards.slice(0).sort((a, b) => a.name[0] < b.name[0] ? 1 : -1)
+export const getScore = (cards) => cards.slice(0).sort((a, b) => a.name[0] < b.name[0] ? -1 : 1)
 	.reduce((s, cur) => s + cur.value > 21 && cur.name === "ace" ? s + 1 : s + cur.value, 0)
 
 
