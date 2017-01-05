@@ -8,6 +8,14 @@ import rootReducer from './reducers'
 import App from './components/App'
 import './index.css'
 
+window.addEventListener("load", function() {
+  // Set a timeout...
+  setTimeout(function(){
+    // Hide the address bar!
+    window.scrollTo(0, 1)
+  }, 0)
+})
+
 const timeoutScheduler = store => next => action => {
   if (!action.meta || !action.meta.delay) {
     return next(action)
