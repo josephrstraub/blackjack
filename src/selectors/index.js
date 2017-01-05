@@ -7,7 +7,7 @@ const getDealerHand = ({ dealer }) => dealer.hand
 const getPlayerHands = ({ player }) => player.hands
 export const getScore = (cards) => cards.slice(0).sort((a, b) => a.value - b.value)
 	.map(card => card.name === "ace" ? {...card, value: 1} : card)
-	.reduce((s, cur) => s + 11 < 21 && cur.name === "ace" ? s + 11 : s + cur.value, 0)
+	.reduce((s, cur) => s + 11 <= 21 && cur.name === "ace" ? s + 11 : s + cur.value, 0)
 
 
 export const getVisibleScore = createSelector([getDealerHand], (hand) => {
