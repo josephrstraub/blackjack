@@ -8,14 +8,21 @@ import rootReducer from './reducers'
 import App from './components/App'
 import './index.css'
 
-window.addEventListener("load", function() {
-  // Set a timeout...
-  console.log("loaded")
-  setTimeout(function(){
-    // Hide the address bar!
-    window.scrollTo(0, 64)
-  }, 1)
-})
+function hideAddressBar()
+{
+  if(!window.location.hash)
+  {
+      if(document.height < window.outerHeight)
+      {
+          document.body.style.height = (window.outerHeight + 50) + 'px'
+      }
+
+      setTimeout( function(){ window.scrollTo(0, 1); }, 50 )
+  }
+}
+
+window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } )
+window.addEventListener("orientationchange", hideAddressBar )
 
 const timeoutScheduler = store => next => action => {
   if (!action.meta || !action.meta.delay) {
