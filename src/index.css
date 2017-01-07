@@ -99,7 +99,7 @@ li.hand {
 
 @media(max-width: 767px) {
   #main {
-    min-height: 112px;
+    min-height: 672px;
   }
   #chips { 
     padding-left: 17%;
