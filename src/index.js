@@ -10,10 +10,11 @@ import './index.css'
 
 window.addEventListener("load", function() {
   // Set a timeout...
+  console.log("loaded")
   setTimeout(function(){
     // Hide the address bar!
-    window.scrollTo(0, 1)
-  }, 0)
+    window.scrollTo(0, 1000)
+  }, 1)
 })
 
 const timeoutScheduler = store => next => action => {
