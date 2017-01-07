@@ -13,7 +13,7 @@ window.addEventListener("load", function() {
   console.log("loaded")
   setTimeout(function(){
     // Hide the address bar!
-    window.scrollTo(0, 1000)
+    window.scrollTo(0, 64)
   }, 1)
 })
 
