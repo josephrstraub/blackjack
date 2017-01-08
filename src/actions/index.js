@@ -5,6 +5,7 @@ export const makeNewGame = () => ({ type: 'NEW_GAME' })
 export const changeWagerSize = (size) => ({ type: 'CHANGE_WAGER_SIZE', size: size || 50 })
 const changePlayerBankroll = (amount) => ({ type: 'CHANGE_PLAYER_BANKROLL', amount })
 export const toggleAutoDeal = () => ({ type: 'AUTO_DEAL_TOGGLE' })
+export const toggleHelpDialog = () => ({ type: 'HELP_DIALOG_TOGGLE' })
 export const reset = () => ({ type: 'RESET' })
 export const split = (index, cards) => (dispatch) => {
 	dispatch({ type: 'SPLIT', index })

@@ -10,6 +10,7 @@ import HeaderContainer from '../containers/HeaderContainer'
 import FooterContainer from '../containers/FooterContainer'
 import HandContainer from '../containers/HandContainer'
 import GameOverDialogContainer from '../containers/GameOverDialogContainer'
+import HelpDialog from '../components/HelpDialog'
 import PlayerChoicesContainer from '../containers/PlayerChoicesContainer'
 import WagerSliderContainer from '../containers/WagerSliderContainer'
  
@@ -73,6 +74,7 @@ class App extends Component {
 						autoHideDuration={2000} />
 				</div>
 			    <GameOverDialogContainer />
+			    <HelpDialog />
 			</div>
 		  </MuiThemeProvider>
 		)
