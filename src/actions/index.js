@@ -113,11 +113,16 @@ const handleEndOfRound = () => (dispatch, getState) => {
 		}
 	})
 	dispatch(changePlayerBankroll(netWinnings))
-	let { bankroll, baseWager: wager } = getState().player.bankroll
-	if (bankroll < wager) { dispatch(changeWagerSize(bankroll)) }
-	dispatch({ type: 'END_ROUND' })
-	if (getState().game.autoDeal) {
-		setTimeout(() => dispatch(makeInitialDeal()), 1500)
+	let { bankroll, baseWager: wager } = getState().player
+	if (bankroll < wager) {
+		dispatch(changeWagerSize(bankroll))
+		dispatch(toggleAutoDeal())
+		dispatch({ type: 'END_ROUND' }) 
+	} else {
+		dispatch({ type: 'END_ROUND' })
+		if (getState().game.autoDeal) {
+			setTimeout(() => dispatch(makeInitialDeal()), 1500)
+		}
 	}
 }
 
