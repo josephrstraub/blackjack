@@ -23,7 +23,7 @@ const dealCardToDealer = (card, delay = 500) => (dispatch, getState) => {
 }
 
 export const dealCardToPlayer = (index, card, disableAfter = false) => (dispatch) => {
-	return dispatch({ type: 'DEAL_CARD_TO_PLAYER', index, card, meta: {delay: 500} }).then(() => {
+	return dispatch({ type: 'DEAL_CARD_TO_PLAYER', index, card: {name: "8", value: 8, suit: "diamonds"}, meta: {delay: 500} }).then(() => {
 		dispatch(cardWasDealt(index, disableAfter))	
 		Promise.resolve()	
 	})

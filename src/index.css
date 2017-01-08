@@ -46,6 +46,18 @@ li.hand {
 
 }
 
+.glass {
+  position: absolute;
+  top: -20px;
+  z-index: 100;
+  box-shadow: inset 0 0 8px 1px rgba(50,50,50,.05); 
+  background-color: rgba(100,200,200,.05);
+}
+
+.glass-hidden {
+  display: none;
+}
+
 #main {
    padding: 10px;
    padding-bottom: 454px;   /* Height of the footer */
@@ -119,7 +131,7 @@ li.hand {
 
 @media (max-width: 992px) and (min-width: 768px) {
 	.playing-card {
-		width: 180px;
+		width: 100px;
 	}
 }
 
