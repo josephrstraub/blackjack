@@ -52,7 +52,10 @@ const terminalDeal = () => (dispatch, getState) => {
 const endRoundIfApplicable = () => (dispatch, getState) => {
 	let { hands } = getState().player
 	if ( hands.every(hand => hand.isComplete) ) {
-		dispatch(terminalDeal()).then(() => dispatch(handleEndOfRound()))
+		setTimeout(
+			() => dispatch(terminalDeal()).then(() => dispatch(handleEndOfRound())),
+			500
+		)
 	}
 }
 
