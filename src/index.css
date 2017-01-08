@@ -133,6 +133,9 @@ li.hand {
 	.playing-card {
 		width: 100px;
 	}
+  li.hand {
+    width: 36%;
+  }
 }
 
 @media (max-width: 1199px) and (min-width: 993px) {
