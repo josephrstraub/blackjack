@@ -67,13 +67,13 @@ export const stand = (index) => (dispatch) => {
 export const cardWasDealt = (index, disableAfter = false) => (dispatch, getState) => {
 	let { hands, baseWager } = getState().player
 	let hand = hands[index]
+	let { cards: dealerCards } = getState().dealer.hand
 	switch (getHandStatus(hand.cards, disableAfter)) {
 		case 'BUST':
 			dispatch({ type: 'BUST', index, amount: hand.wager.isDouble ? baseWager * 2 : baseWager })
 			dispatch(endRoundIfApplicable())
 			break
 		case 'BLACKJACK':
-			let { cards: dealerCards } = getState().dealer.hand
 			if (dealerCards.length === 2 && getHandStatus(dealerCards) !== 'BLACKJACK') {
 				dispatch({ type: 'BLACKJACK', index, amount: hand.wager.isDouble ? baseWager * 3 : baseWager * 1.5 })
 				dispatch(endRoundIfApplicable())
@@ -83,6 +83,9 @@ export const cardWasDealt = (index, disableAfter = false) => (dispatch, getState
 			dispatch(stand(index))
 			break
 		default:
+			if (dealerCards.length === 2 && getHandStatus(dealerCards) === 'BLACKJACK') {
+				dispatch(stand(0))
+			}
 	}
 }
 
