@@ -8,8 +8,6 @@ import rootReducer from './reducers'
 import App from './components/App'
 import './index.css'
 
-window.addEventListener("load", () => document.documentElement.webkitRequestFullscreen() )
-
 const timeoutScheduler = store => next => action => {
   if (!action.meta || !action.meta.delay) {
 	return next(action)
